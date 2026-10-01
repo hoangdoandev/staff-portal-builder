@@ -7,6 +7,8 @@ interface Props {
 }
 
 const { title, description = '' } = Astro.props;
+
+// body là flex cột cao tối thiểu một màn hình: phần tử có flex-1 (main trong PageLayout) giãn ra, đẩy footer xuống đáy.
 ---
 
 <!doctype html>
@@ -22,7 +24,7 @@ const { title, description = '' } = Astro.props;
       import.meta.env.PROD && <link rel="stylesheet" href="/assets/css/fonts.css" />
     }
   </head>
-  <body class="font-sans text-body text-ink">
+  <body class="flex min-h-dvh flex-col font-sans text-body text-ink">
     <slot />
   </body>
 </html>

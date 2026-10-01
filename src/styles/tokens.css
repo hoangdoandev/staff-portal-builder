@@ -77,7 +77,8 @@
   --font-size-body: 14px;
   --font-size-body-sm: 13px;
   --font-size-caption: 12px;
-  --font-size-caption-sm: 11px; /* tag, chip, footer */
+  --font-size-caption-sm: 11px; /* tag, chip, bản quyền ở footer */
+  --font-size-footer-link: 11px; /* link ở footer, PC cũng 11px */
   --font-size-nav: 10px; /* nhãn icon header */
   --font-size-micro: 10px; /* số trong huy hiệu */
 }

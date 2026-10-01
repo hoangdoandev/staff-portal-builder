@@ -7,7 +7,10 @@ import { hoverOnPointerDevices } from './uno/variants';
 // presetWind4 đã kèm reset trong preflight (box-sizing, margin...), không cần @unocss/reset.
 // CSS dùng @layer, @property, CSS variables và màu hiện đại, nhắm tới trình duyệt hiện đại.
 export default defineConfig({
-  presets: [presetWind4(), fontsPreset()],
+  // theme: true ghi toàn bộ biến theme (--colors-*, --text-*...) theo thứ tự khai báo. Mặc định 'on-demand' chỉ ghi
+  // biến đang dùng, theo thứ tự phát hiện class; Astro xử lý các trang song song nên thứ tự đó đổi giữa các lần build
+  // và style.css không ổn định. Ghi đủ còn giúp khối :root không đổi khi một màn dùng thêm token.
+  presets: [presetWind4({ preflights: { theme: true } }), fontsPreset()],
   transformers: [transformerDirectives(), transformerVariantGroup()],
   variants: [hoverOnPointerDevices],
   shortcuts,
