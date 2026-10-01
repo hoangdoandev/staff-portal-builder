@@ -1,6 +1,6 @@
 ---
 /**
- * 画面一覧: danh sách các màn đã cắt; link ページを開く mở màn ở tab mới, kèm link Figma PC/SP. Trang nội bộ (không có trong Figma), tự thiết kế bằng token sẵn có.
+ * 画面一覧: danh sách các màn đã cắt; link Open page mở màn ở tab mới, kèm link Figma PC/SP. Trang nội bộ (không có trong Figma), tự thiết kế bằng token sẵn có.
  * Dữ liệu ở src/data/screens.ts. Build dừng nếu danh sách lệch với các trang trong src/pages/
  * (thiếu trang chưa khai báo, hoặc khai báo đường dẫn không tồn tại).
  */
@@ -54,7 +54,7 @@ const total = listedPaths.length;
                 </div>
                 <p class="flex shrink-0 gap-12px text-caption">
                   <a href={screen.path} target="_blank" rel="noopener" class="link font-semibold">
-                    ページを開く
+                    Open page
                   </a>
                   {screen.figma && (
                     <Fragment>
