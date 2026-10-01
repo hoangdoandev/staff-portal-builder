@@ -21,6 +21,8 @@ export const shortcuts = {
   // Huy hiệu số tròn đỏ: 16px ở SP, 18px ở PC.
   badge:
     'inline-flex size-16px items-center justify-center rounded-full bg-badge text-micro font-semibold text-white pc:size-18px',
+  // Nhãn trạng thái nhỏ bo 4px (ví dụ "自己評価入力済"); màu chữ và nền đặt kèm theo trạng thái. Cao 20px ở SP, 21px ở PC.
+  chip: 'inline-flex h-20px items-center whitespace-nowrap rounded-base px-8px text-caption-sm font-semibold pc:h-21px',
   // Gốc chung của nút: cao 44px ở SP, 50px ở PC.
   btn: `inline-flex items-center justify-center rounded-base px-24px h-44px pc:h-50px text-title-card transition-colors duration-150 ${focusRing}`,
   // Nút chính: nền cam.

@@ -1,0 +1,29 @@
+---
+/**
+ * Thanh tiến độ kèm số phần trăm bên phải (Figma: thanh 5px SP / 6px PC, nền xám, phần đã xong màu cam).
+ * Dùng chung cho 自己評価の進捗 và 一次評価の進捗.
+ */
+interface Props {
+  label: string;
+  percent: number;
+}
+
+const { label, percent } = Astro.props;
+---
+
+<div class="flex items-center gap-10px pc:gap-11px">
+  <div
+    role="progressbar"
+    aria-label={label}
+    aria-valuemin="0"
+    aria-valuemax="100"
+    aria-valuenow={percent}
+    class="h-5px flex-1 overflow-hidden rounded-bar bg-surface-track pc:h-6px"
+  >
+    <div class="h-full rounded-bar bg-primary" style={`width: ${percent}%`} />
+  </div>
+  <span class="flex items-baseline text-figure font-semibold text-primary">
+    {percent}
+    <span class="text-figure-unit font-normal">%</span>
+  </span>
+</div>

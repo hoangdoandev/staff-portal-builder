@@ -5,8 +5,10 @@
  * Dữ liệu dưới đây là nội dung mẫu theo thiết kế, BE thay bằng dữ liệu thật.
  */
 import Breadcrumb from '../../components/Breadcrumb.astro';
+import EvaluationPeriodCard from '../../components/EvaluationPeriodCard.astro';
 import PageTabs from '../../components/PageTabs.astro';
 import PageTitle from '../../components/PageTitle.astro';
+import ProgressBar from '../../components/ProgressBar.astro';
 import PageLayout from '../../layouts/PageLayout.astro';
 
 interface EvaluationPeriod {
@@ -46,73 +48,41 @@ const periods: EvaluationPeriod[] = [
     label="人事評価の種類"
     items={[
       { label: '自己評価', href: '/evaluation/self.html', current: true, count: 1 },
-      { label: '部下の評価', href: '#' },
+      { label: '部下の評価', href: '/evaluation/primary.html' },
     ]}
   />
 
   <ul class="mx-10px mb-40px mt-30px flex flex-col gap-15px pc:(mx-auto mt-50px w-580px)">
     {periods.map((period) => (
-      <li class="rounded-base border border-line bg-white px-14px pc:px-19px">
-        <dl class="divide-y divide-line-hair">
-          <div class="pb-14px pt-12px pc:pt-16px">
-            <dt class="tag">対象期間</dt>
-            <dd class="mt-6px flex items-center justify-between gap-10px">
-              <span class="shrink-0 text-body font-semibold">{period.name}</span>
-              <span class="text-right text-caption text-ink-sub">{period.range}</span>
+      <EvaluationPeriodCard
+        name={period.name}
+        range={period.range}
+        deadline={period.deadline}
+        remaining={period.remaining}
+        closed={period.closed}
+      >
+        {period.progress && (
+          <div class="pb-15px pt-15px">
+            <dt class="tag">自己評価の進捗</dt>
+            <dd class="mt-7px pc:mt-5px">
+              <ProgressBar label="自己評価の進捗" percent={period.progress.percent} />
+              <p class="text-right text-caption text-ink-sub pc:mt-4px">
+                {period.progress.summary}
+              </p>
             </dd>
           </div>
-          <div class="pb-14px pt-15px">
-            <dt class="tag">提出期限</dt>
-            <dd class="mt-6px flex items-center justify-between gap-10px">
-              <span
-                class:list={[
-                  'text-body font-semibold',
-                  period.closed ? 'text-ink-disabled' : 'text-danger',
-                ]}
-              >
-                {period.deadline}
-              </span>
-              <span class="text-right text-caption text-ink-sub">{period.remaining}</span>
-            </dd>
-          </div>
-          {period.progress && (
-            <div class="pb-15px pt-15px">
-              <dt class="tag">自己評価の進捗</dt>
-              <dd class="mt-7px pc:mt-5px">
-                <div class="flex items-center gap-10px pc:gap-11px">
-                  <div
-                    role="progressbar"
-                    aria-label="自己評価の進捗"
-                    aria-valuemin="0"
-                    aria-valuemax="100"
-                    aria-valuenow={period.progress.percent}
-                    class="h-5px flex-1 overflow-hidden rounded-bar bg-surface-track pc:h-6px"
-                  >
-                    <div
-                      class="h-full rounded-bar bg-primary"
-                      style={`width: ${period.progress.percent}%`}
-                    />
-                  </div>
-                  <span class="flex items-baseline text-figure font-semibold text-primary">
-                    {period.progress.percent}
-                    <span class="text-figure-unit font-normal">%</span>
-                  </span>
-                </div>
-                <p class="text-right text-caption text-ink-sub pc:mt-4px">
-                  {period.progress.summary}
-                </p>
-              </dd>
-            </div>
-          )}
-        </dl>
+        )}
         {period.inputHref && (
-          <div class="border-t border-line-hair pb-13px pt-10px text-center pc:(pb-14px pt-15px)">
+          <div
+            slot="footer"
+            class="border-t border-line-hair pb-13px pt-10px text-center pc:(pb-14px pt-15px)"
+          >
             <a href={period.inputHref} class="link text-body">
               自己評価を入力する
             </a>
           </div>
         )}
-      </li>
+      </EvaluationPeriodCard>
     ))}
   </ul>
 </PageLayout>
