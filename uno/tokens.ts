@@ -64,7 +64,7 @@ export const colors = {
 
 export const radius = cssVars('rounded', ['tag', 'check', 'base', 'bar', 'pill']);
 
-export const shadow = cssVars('box-shadow', ['header', 'title', 'bar', 'back', 'menu']);
+export const shadow = cssVars('box-shadow', ['header', 'header-pc', 'title', 'bar', 'back', 'menu']);
 
 export const leading = cssVars('line-height', ['copy', 'tight']);
 
