@@ -9,6 +9,7 @@
  * Lệch thiết kế có chủ ý: nhãn ô thứ hai của 個人目標 trên PC ghi trùng "今期の個人目標", dùng "目標の背景・理由" theo SP.
  */
 import Breadcrumb from '../../components/Breadcrumb.astro';
+import DateField from '../../components/DateField.astro';
 import EvaluationCriterionCard, {
   type Grade,
 } from '../../components/EvaluationCriterionCard.astro';
@@ -224,7 +225,7 @@ const commentPlaceholder = '評点の全体像と、次期に期待すること�
             name="overall-comment"
             rows="4"
             placeholder={commentPlaceholder}
-            class="field mt-5px block h-124px pc:(h-auto min-h-124px flex-1)"
+            class="field mt-5px block h-124px pc:h-249px"
           ></textarea>
         </div>
       </EvaluationSection>
@@ -238,12 +239,11 @@ const commentPlaceholder = '評点の全体像と、次期に期待すること�
           <p class="text-body leading-copy">
             一次評価者が面談を行ったあとに記入します。評価点には反映しません。
           </p>
-          <input
-            type="date"
+          <DateField
             name="feedback-date"
             value="2026-07-01"
-            aria-label="面談日"
-            class="field-date mt-15px pc:mt-10px"
+            label="面談日"
+            class="mt-15px pc:mt-10px"
           />
           <label for="feedback-summary" class="mt-20px block text-caption leading-copy">
             面談の要点（伝えたこと・本人の受けとめ・次期の合意事項）
@@ -283,6 +283,7 @@ const commentPlaceholder = '評点の全体像と、次期に期待すること�
   </form>
   <script is:inline defer src="/assets/js/char-counter.js"></script>
   <script is:inline defer src="/assets/js/number-stepper.js"></script>
+  <script is:inline defer src="/assets/js/date-field.js"></script>
   <FixedActionBar slot="bottom-bar">
     <p class="text-bar-label leading-tight text-ink-sub pc:(flex gap-19px leading-copy)">
       <span class="block">評価対象 永田 丸子</span>

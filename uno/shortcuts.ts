@@ -43,9 +43,8 @@ export const shortcuts = {
     'btn border border-primary bg-white text-primary hov:bg-primary-tint active:bg-primary-tint-active disabled:(border-disabled text-ink-disabled cursor-not-allowed)',
   // Link xanh.
   link: `text-secondary transition-colors duration-150 hov:(text-secondary-hover underline) ${focusRing}`,
-  // Ô chọn ngày <input type="date">: nền trắng viền xám, cao 38px ở SP, 42px ở PC. Icon lịch của trình duyệt (Chrome, Edge)
-  // thay bằng icon thiết kế; Safari/Firefox giữ giao diện riêng. Định dạng ngày hiển thị theo ngôn ngữ của trình duyệt.
-  'field-date': `block h-38px w-full rounded-base border border-line bg-white px-10px text-body text-ink transition-colors duration-150 focus:(border-primary outline-none ring-2 ring-primary/20) pc:h-42px [&::-webkit-calendar-picker-indicator]:(m-0 size-17px cursor-pointer bg-[url(/assets/img/icon/icon-calendar.svg)] bg-[length:13px_14px] bg-center bg-no-repeat p-0 pc:size-18px pc:bg-[length:14px_15px])`,
+  // Nút hiển thị ngày của DateField: nền trắng viền xám, cao 38px ở SP, 42px ở PC, icon lịch bên phải.
+  'field-date': `flex h-38px w-full cursor-pointer items-center justify-between rounded-base border border-line bg-white px-10px text-left text-body text-ink transition-colors duration-150 focus-visible:(border-primary outline-none ring-2 ring-primary/20) pc:h-42px`,
   // Ô số giữa hai nút −/+ (NumberStepper): ẩn nút tăng giảm mặc định của trình duyệt.
   'stepper-input':
     'w-0 min-w-0 flex-1 bg-transparent text-center text-body text-ink outline-none [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none',
