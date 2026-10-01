@@ -63,6 +63,7 @@
   --box-shadow-header: 0 0 2px rgba(0, 0, 0, 0.15); /* header SP */
   --box-shadow-title: 0 2px 2px rgba(0, 0, 0, 0.05); /* thanh tiêu đề trang */
   --box-shadow-bar: 0 -3px 3px rgba(0, 0, 0, 0.05); /* thanh hành động dính đáy */
+  --box-shadow-back: 0 0 4px rgba(0, 0, 0, 0.08); /* nút quay lại tròn trên thanh tiêu đề */
 
   /* Chiều cao dòng */
   --line-height-copy: 1.55; /* đoạn nhiều dòng */
@@ -81,6 +82,8 @@
   --font-size-footer-link: 11px; /* link ở footer, PC cũng 11px */
   --font-size-nav: 10px; /* nhãn icon header */
   --font-size-micro: 10px; /* số trong huy hiệu */
+  --font-size-figure: 12px; /* số phần trăm tiến độ */
+  --font-size-figure-unit: 10px; /* ký hiệu % đi kèm */
 }
 
 /* Cỡ chữ: PC (từ 768px, khớp breakpoint `pc` trong uno/tokens.ts) */
@@ -97,5 +100,7 @@
     --font-size-caption-sm: 12px;
     --font-size-nav: 12px;
     --font-size-micro: 11px;
+    --font-size-figure: 14px;
+    --font-size-figure-unit: 12px;
   }
 }

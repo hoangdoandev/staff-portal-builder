@@ -1,0 +1,35 @@
+---
+/**
+ * Tab chuyển trang dưới thanh tiêu đề (ví dụ 自己評価 / 部下の評価). Mỗi tab là một link sang trang riêng.
+ * SP: các tab chia đều cả chiều ngang. PC: mỗi tab rộng 240px, căn giữa.
+ * Tab đang chọn chữ cam, gạch dưới cam 3px đè lên đường kẻ xám.
+ */
+interface Props {
+  label: string;
+  items: { label: string; href: string; current?: boolean; count?: number }[];
+}
+
+const { label, items } = Astro.props;
+---
+
+<nav aria-label={label}>
+  <ul class="flex justify-center border-b border-line-hair pt-22px pc:pt-26px">
+    {items.map(({ label, href, current, count }) => (
+      <li class="lt-pc:flex-1">
+        <a
+          href={href}
+          aria-current={current ? 'page' : undefined}
+          class:list={[
+            'relative -mb-px flex items-center justify-center gap-5px border-b-3 pb-10px text-body transition-colors duration-150 focusable pc:(w-240px pb-9px)',
+            current
+              ? 'border-primary text-primary'
+              : 'border-transparent text-ink hov:text-primary',
+          ]}
+        >
+          {label}
+          {count ? <span class="badge">{count}</span> : null}
+        </a>
+      </li>
+    ))}
+  </ul>
+</nav>

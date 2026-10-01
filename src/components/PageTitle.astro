@@ -1,0 +1,32 @@
+---
+/**
+ * Thanh tiêu đề trang (Figma "pageTitle"): nền xám nhạt có bóng, tiêu đề ở giữa, nút quay lại tròn bên trái.
+ * SP cao 40px, chữ 15px đậm; PC cao 50px, chữ 18px W5.
+ */
+interface Props {
+  title: string;
+  /** Link nút quay lại; bỏ trống thì không hiện nút. */
+  backHref?: string;
+}
+
+const { title, backHref } = Astro.props;
+---
+
+<div class="relative flex h-40px items-center justify-center bg-surface-title shadow-title pc:h-50px">
+  {backHref && (
+    <a
+      href={backHref}
+      aria-label="戻る"
+      class="absolute left-10px top-1/2 flex size-26px -translate-y-1/2 items-center justify-center rounded-full bg-white shadow-back transition-opacity duration-150 hov:opacity-70 focusable pc:(left-20px size-28px)"
+    >
+      <img
+        src="/assets/img/icon/icon-chevron-left.svg"
+        alt=""
+        width="8"
+        height="13"
+        class="h-12px w-auto pc:h-13px"
+      />
+    </a>
+  )}
+  <h1 class="text-title-page font-semibold pc:font-medium">{title}</h1>
+</div>

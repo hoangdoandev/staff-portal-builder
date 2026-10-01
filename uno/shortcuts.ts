@@ -16,6 +16,11 @@ export const shortcuts = {
   'header-nav-icon': 'relative flex h-22px w-full items-center justify-center',
   // Link ở footer (cỡ chữ đặt trên ul để chiều cao dòng khớp thiết kế).
   'footer-link': `text-ink transition-colors duration-150 hov:underline ${focusRing}`,
+  // Nhãn nền xám nhỏ (ví dụ "対象期間"): cao 18px ở SP, 22px ở PC.
+  tag: 'flex h-18px w-fit items-center rounded-tag bg-surface-tag px-7px text-caption-sm text-ink pc:h-22px',
+  // Huy hiệu số tròn đỏ: 16px ở SP, 18px ở PC.
+  badge:
+    'inline-flex size-16px items-center justify-center rounded-full bg-badge text-micro font-semibold text-white pc:size-18px',
   // Gốc chung của nút: cao 44px ở SP, 50px ở PC.
   btn: `inline-flex items-center justify-center rounded-base px-24px h-44px pc:h-50px text-title-card transition-colors duration-150 ${focusRing}`,
   // Nút chính: nền cam.
