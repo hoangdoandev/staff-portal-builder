@@ -1,0 +1,31 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="ログイン">
+  <main class="mx-auto max-w-sm p-6">
+    <h1 class="mb-6 text-2xl font-bold">ログイン</h1>
+    <form action="#" method="post" class="space-y-4">
+      <label class="block">
+        <span class="mb-1 block text-sm">メールアドレス</span>
+        <input type="email" name="email" class="w-full rounded border border-gray-300 p-2" />
+      </label>
+      <label class="block">
+        <span class="mb-1 block text-sm">パスワード</span>
+        <input
+          type="password"
+          name="password"
+          data-password-input
+          class="w-full rounded border border-gray-300 p-2"
+        />
+      </label>
+      <button type="button" data-password-toggle class="text-sm underline">
+        パスワードを表示
+      </button>
+      <button type="submit" class="btn-primary w-full">
+        ログイン
+      </button>
+    </form>
+  </main>
+  <script is:inline type="module" src="/assets/js/pages/auth-login.js"></script>
+</BaseLayout>

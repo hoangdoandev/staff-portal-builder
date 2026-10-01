@@ -1,0 +1,12 @@
+node_modules/
+dist/
+.astro/
+
+# Sinh ra bởi pnpm build:assets (UnoCSS CLI + tsc), không commit
+public/assets/css/
+public/assets/js/
+
+.DS_Store
+*.log
+.env
+.env.*

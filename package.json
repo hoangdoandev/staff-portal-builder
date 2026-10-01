@@ -1,0 +1,37 @@
+{
+  "name": "staff-portal-builder",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@11.9.0",
+  "engines": {
+    "node": ">=24.14.0"
+  },
+  "scripts": {
+    "dev": "concurrently -k -n uno,ts,astro \"pnpm uno:watch\" \"pnpm scripts:watch\" \"astro dev\"",
+    "build": "pnpm clean:assets && pnpm build:assets && astro build && pnpm format:dist",
+    "build:assets": "pnpm uno && pnpm scripts:build",
+    "clean:assets": "rm -rf public/assets/css public/assets/js",
+    "uno": "unocss \"src/**/*.{astro,ts}\" -c uno.config.ts -o public/assets/css/style.css",
+    "uno:watch": "pnpm uno --watch",
+    "scripts:build": "tsc -p tsconfig.scripts.json",
+    "scripts:watch": "tsc -p tsconfig.scripts.json --watch --preserveWatchOutput",
+    "format:dist": "prettier --ignore-path .prettierignore --write \"dist/**/*.{html,css,js}\"",
+    "check": "astro check",
+    "preview": "astro preview",
+    "release": "bash scripts/release.sh"
+  },
+  "dependencies": {
+    "astro": "7.3.5"
+  },
+  "devDependencies": {
+    "@astrojs/check": "0.9.10",
+    "@types/node": "26.6.3",
+    "@unocss/cli": "66.10.5",
+    "concurrently": "10.0.5",
+    "prettier": "3.9.9",
+    "prettier-plugin-astro": "1.1.0",
+    "typescript": "6.0.3",
+    "unocss": "66.10.5"
+  }
+}
