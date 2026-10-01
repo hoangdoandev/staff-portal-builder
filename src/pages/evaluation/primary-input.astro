@@ -130,7 +130,7 @@ const commentPlaceholder = '評点の全体像と、次期に期待すること�
     id={formId}
     action="#"
     method="post"
-    class="mx-10px mb-56px mt-30px pc:(mx-auto mb-100px mt-24px w-1000px)"
+    class="content-1000 mb-56px mt-30px pc:(mb-100px mt-24px)"
   >
     <div class="pc:(flex items-center gap-9px px-2px)">
       <p class="tag">対象期間</p>
@@ -141,14 +141,14 @@ const commentPlaceholder = '評点の全体像と、次期に期待すること�
     </div>
 
     <div class="mt-30px pc:(flex items-start pl-2px)">
-      <p class="tag pc:mt-4px">評価対象</p>
-      <p class="mt-6px text-title-period font-semibold pc:(ml-9px mt-0)">永田 丸子</p>
-      <p class="mt-5px text-caption leading-copy text-ink-sub pc:(ml-20px mt-4px)">
+      <p class="tag pc:(mt-4px shrink-0)">評価対象</p>
+      <p class="mt-6px text-title-period font-semibold pc:(ml-9px mt-0 shrink-0)">永田 丸子</p>
+      <p class="mt-5px text-caption leading-copy text-ink-sub pc:(ml-20px mt-4px shrink-0)">
         <span class="block">サニーライフおゆみ野</span>
         <span class="block">支配人(課長級)／中間管理職</span>
         <span class="block">介護支援専門職／G4</span>
       </p>
-      <div class="mt-16px pl-2px pr-5px pc:(ml-auto mt-6px h-58px w-588px border-l border-line-hair pl-49px pr-0 pt-6px)">
+      <div class="mt-16px pl-2px pr-5px pc:(ml-auto mt-6px h-58px w-588px min-w-0 border-l border-line-hair pl-49px pr-0 pt-6px)">
         <p class="text-caption leading-copy">一次評価の進捗</p>
         <div class="pc:-mt-3px">
           <ProgressBar label="一次評価の進捗" percent={67} />
@@ -286,17 +286,17 @@ const commentPlaceholder = '評点の全体像と、次期に期待すること�
   <script is:inline defer src="/assets/js/date-field.js"></script>
   <FixedActionBar slot="bottom-bar">
     <p class="text-bar-label leading-tight text-ink-sub pc:(flex gap-19px leading-copy)">
-      <span class="block">評価対象 永田 丸子</span>
-      <span class="block">1次評価 3/11項目</span>
+      <span class="block truncate">評価対象 永田 丸子</span>
+      <span class="block truncate">1次評価 3/11項目</span>
     </p>
-    <p class="text-total font-semibold leading-copy">総合 19点・D</p>
+    <p class="truncate text-total font-semibold leading-copy">総合 19点・D</p>
     <Fragment slot="actions">
       <button
         type="submit"
         form={formId}
         name="action"
         value="save"
-        class="btn-outline w-72px pc:w-73px"
+        class="btn-outline w-72px shrink-0 pc:w-73px"
       >
         保存
       </button>
@@ -306,7 +306,7 @@ const commentPlaceholder = '評点の全体像と、次期に期待すること�
         name="action"
         value="submit"
         disabled
-        class="btn-primary w-150px pc:w-380px"
+        class="btn-primary w-150px min-w-100px pc:(w-380px min-w-150px)"
       >
         提出する
       </button>

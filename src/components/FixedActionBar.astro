@@ -1,18 +1,20 @@
 ---
 /**
  * Thanh hành động cố định ở đáy màn hình (Figma 606:4876 PC, 606:4041 SP), luôn hiện khi cuộn trang.
- * Nền trắng 90% có làm mờ phía sau, bóng hắt lên trên. SP cao 74px, PC cao 80px; nội dung PC rộng 1000px như vùng nội dung.
+ * Nền trắng 90% có làm mờ phía sau, bóng hắt lên trên. SP cao 74px, PC cao 80px; nội dung PC rộng 1000px như vùng nội dung (co lại ở màn hẹp, cùng công thức với shortcut content-1000).
+ * Không đủ chỗ (SP dưới 390px, PC dưới khoảng 1000px): nhóm nút co trước (chữ có hệ số co gần 0), tới min-w của nút thì chữ bên trái mới cắt bằng "…"
+ * (đặt `truncate` trên từng dòng).
  * Slot mặc định: thông tin bên trái (ví dụ tiến độ, tổng điểm). Slot "actions": các nút bên phải.
  * Đặt vào PageLayout bằng slot="bottom-bar" để layout chừa khoảng trống tương ứng sau footer.
  */
 ---
 
 <div class="fixed inset-x-0 bottom-0 z-10 bg-white/90 shadow-bar backdrop-blur-[2.5px]">
-  <div class="flex h-74px items-center justify-between gap-10px px-15px pc:(mx-auto h-80px w-1000px pl-15px pr-20px)">
-    <div class="min-w-0">
+  <div class="flex h-74px items-center justify-between gap-10px px-15px pc:(mx-[max(20px,calc((100%_-_1000px)/2))] h-80px pl-15px pr-20px)">
+    <div class="min-w-0 shrink-[0.01]">
       <slot />
     </div>
-    <div class="flex shrink-0 gap-5px pc:gap-7px">
+    <div class="flex min-w-0 shrink-[10] gap-5px pc:gap-7px">
       <slot name="actions" />
     </div>
   </div>

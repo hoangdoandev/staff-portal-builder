@@ -102,7 +102,7 @@ const formId = 'self-evaluation-form';
     id={formId}
     action="#"
     method="post"
-    class="mx-10px mb-30px mt-30px pc:(mx-auto mb-70px mt-24px w-1000px)"
+    class="content-1000 mb-30px mt-30px pc:(mb-70px mt-24px)"
   >
     <div class="pc:(flex items-center gap-9px px-2px)">
       <p class="tag">対象期間</p>
@@ -128,15 +128,15 @@ const formId = 'self-evaluation-form';
   </form>
   <script is:inline defer src="/assets/js/char-counter.js"></script>
   <FixedActionBar slot="bottom-bar">
-    <p class="text-bar-label leading-copy text-ink-sub">自己評価 3/11項目</p>
-    <p class="text-total font-semibold leading-copy">総合 19点・D</p>
+    <p class="truncate text-bar-label leading-copy text-ink-sub">自己評価 3/11項目</p>
+    <p class="truncate text-total font-semibold leading-copy">総合 19点・D</p>
     <Fragment slot="actions">
       <button
         type="submit"
         form={formId}
         name="action"
         value="save"
-        class="btn-outline w-72px pc:w-73px"
+        class="btn-outline w-72px shrink-0 pc:w-73px"
       >
         保存
       </button>
@@ -145,7 +145,7 @@ const formId = 'self-evaluation-form';
         form={formId}
         name="action"
         value="submit"
-        class="btn-primary w-150px pc:w-380px"
+        class="btn-primary w-150px min-w-100px pc:(w-380px min-w-150px)"
       >
         提出する
       </button>
