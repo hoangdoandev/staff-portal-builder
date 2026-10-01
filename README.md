@@ -55,6 +55,10 @@ Nguồn: Figma "Kawashima HR - Staff Portal" (khung PC 1366px, SP 390px). Giữ 
   máy khác dùng Noto Sans JP tải từ Google lúc build (lần build đầu hoặc sau khi xoá cache cần có mạng), lưu ở
   `public/assets/fonts/`. `@font-face` được tách riêng ra `assets/css/fonts.css` để `style.css` gọn.
   Weight: W3 = 400, W5 = 500, W6 = 600, W7 = 700.
+- **Chiều cao dòng bằng px:** mỗi cỡ chữ có `--line-height-*` đi kèm (bằng chiều cao khung chữ "Auto" của Figma = làm tròn lên
+  cỡ × 1.5, ví dụ 15px → 23px), không dùng `normal` vì mỗi font/trình duyệt tính khác nhau. Đoạn nhiều dòng thêm `leading-copy` (155%).
+- **So pixel-perfect chỉ trên macOS** (Hiragino Sans là font thiết kế). Noto Sans JP trên Windows/Android hẹp hơn khoảng 8%,
+  nên chữ xuống dòng và chiều rộng khác thiết kế; chiều cao dòng vẫn giữ đúng.
 - **Trạng thái hover, active, focus, lỗi** không có trong Figma: FE tự thêm theo phong cách thiết kế (các giá trị này ghi
   "ngoài thiết kế" trong `tokens.css`). Hover viết bằng `hov:` thay cho `hover:`. Lỗi: đặt `aria-invalid="true"` hoặc class `is-error`.
 - **Độ tương phản theo thiết kế:** chữ trắng trên cam `#f57a38` khoảng 2.7:1, chữ `#f76862` trên nền trắng khoảng 3.2:1,
