@@ -1,0 +1,27 @@
+---
+/**
+ * Footer chung (Figma PC 606:4696, SP 606:3878).
+ * - PC: một hàng cao 52px, link bên trái, bản quyền bên phải.
+ * - SP: hai dòng căn giữa, link ở trên, bản quyền ở dưới.
+ * Figma để link "利用規約" bản PC cỡ 12px màu #666, khác hai link còn lại (11px #333) và khác bản SP;
+ * coi là lỗi thiết kế, cả ba link dùng chung một kiểu.
+ */
+const links = [
+  { label: '利用規約', href: '#' },
+  { label: 'プライバシーポリシー', href: '#' },
+  { label: '推奨環境', href: '#' },
+];
+---
+
+<footer class="flex flex-col items-center gap-5px border-t border-line-hair bg-surface-footer pb-8px pt-12px pc:(h-52px flex-row justify-between pl-20px pr-16px py-0)">
+  <ul class="flex gap-25px text-footer-link pc:gap-30px">
+    {links.map(({ label, href }) => (
+      <li>
+        <a href={href} class="footer-link">
+          {label}
+        </a>
+      </li>
+    ))}
+  </ul>
+  <p class="text-caption-sm text-ink-faint pc:text-ink-mute">© Kawashima Corporation.</p>
+</footer>

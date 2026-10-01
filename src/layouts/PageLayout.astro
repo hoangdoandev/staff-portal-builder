@@ -1,0 +1,21 @@
+---
+/**
+ * Khung trang chung: header, main, footer.
+ * main giãn hết phần còn lại (body là flex cột cao tối thiểu một màn hình, xem BaseLayout),
+ * nên trang ít nội dung thì footer vẫn nằm sát đáy màn hình.
+ */
+import type { ComponentProps } from 'astro/types';
+import SiteFooter from '../components/SiteFooter.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import BaseLayout from './BaseLayout.astro';
+
+type Props = ComponentProps<typeof BaseLayout>;
+---
+
+<BaseLayout {...Astro.props}>
+  <SiteHeader />
+  <main class="flex-1">
+    <slot />
+  </main>
+  <SiteFooter />
+</BaseLayout>

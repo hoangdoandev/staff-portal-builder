@@ -1,0 +1,88 @@
+---
+/**
+ * Header chung (Figma PC 606:4688, SP 606:3892).
+ * - PC: 5 mục, cột rộng cố định để khoảng cách giữa các tâm icon đều 79px như thiết kế.
+ * - SP: chỉ マイページ / お知らせ / メニュー, nhãn đậm màu xám. Bỏ phần trắng phía trên khung Figma
+ *   (chỗ thanh trạng thái điện thoại), giữ nguyên vị trí các phần tử bên trong.
+ * - Icon và nhãn cùng nằm trên một hàng: icon trong hộp cao 22px, nhãn ngay bên dưới.
+ */
+interface Props {
+  /** Số thông báo chưa đọc; 0 thì ẩn huy hiệu. */
+  noticeCount?: number;
+}
+
+const { noticeCount = 3 } = Astro.props;
+---
+
+<header class="flex justify-between bg-white pl-12px pr-10px shadow-header pc:(border-b border-line-hair pl-18px pr-8px shadow-none)">
+  <a href="/" class="mt-9px self-start focusable pc:mt-13px">
+    <img
+      src="/assets/img/common/logo-staff-portal.svg"
+      alt="STAFFポータル 株式会社川島コーポレーション"
+      width="207"
+      height="38"
+      class="h-34px w-auto pc:h-38px"
+    />
+  </a>
+  <nav aria-label="メインメニュー">
+    <ul class="flex gap-9px pc:gap-15px">
+      <li class="lt-pc:hidden">
+        <a href="#" class="header-nav-item">
+          <span class="header-nav-icon">
+            <img src="/assets/img/icon/icon-search.svg" alt="" width="19" height="19" />
+          </span>
+          求人検索
+        </a>
+      </li>
+      <li class="lt-pc:hidden">
+        <a href="#" class="header-nav-item">
+          <span class="header-nav-icon">
+            <img src="/assets/img/icon/icon-entry.svg" alt="" width="19" height="20" />
+          </span>
+          エントリー
+        </a>
+      </li>
+      <li>
+        <a href="#" class="header-nav-item">
+          <span class="header-nav-icon">
+            <img
+              src="/assets/img/icon/icon-mypage.svg"
+              alt=""
+              width="19"
+              height="19"
+              class="size-17px pc:size-19px"
+            />
+          </span>
+          マイページ
+        </a>
+      </li>
+      <li>
+        <a href="#" class="header-nav-item">
+          <span class="header-nav-icon">
+            <img
+              src="/assets/img/icon/icon-bell.svg"
+              alt=""
+              width="17"
+              height="22"
+              class="h-20px w-auto pc:h-22px"
+            />
+            {noticeCount > 0 && (
+              <span class="absolute left-50% top--5px flex size-16px items-center justify-center rounded-full bg-badge text-micro font-semibold text-white pc:(left-[calc(50%+2px)] top--3px size-18px)">
+                {noticeCount}
+              </span>
+            )}
+          </span>
+          お知らせ
+        </a>
+      </li>
+      <li>
+        <button type="button" class="header-nav-item" aria-expanded="false">
+          <span class="header-nav-icon">
+            <img src="/assets/img/icon/icon-menu.svg" alt="" width="20" height="14" />
+          </span>
+          メニュー
+        </button>
+      </li>
+    </ul>
+  </nav>
+</header>

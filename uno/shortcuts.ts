@@ -7,6 +7,15 @@
 const focusRing = 'focus-visible:(outline-2 outline-offset-2 outline-secondary)';
 
 export const shortcuts = {
+  // Viền focus khi điều hướng bằng bàn phím, cho link/nút không dùng shortcut nào bên dưới.
+  // (Không đặt tên bắt đầu bằng "focus-": UnoCSS hiểu thành biến thể focus: + utility.)
+  focusable: focusRing,
+  // Mục điều hướng trên header: icon trên, nhãn dưới. SP nhãn 10px đậm xám, PC 12px thường màu chữ chính.
+  'header-nav-item': `flex flex-col items-center gap-1px whitespace-nowrap pb-6px pt-11px text-nav font-semibold text-ink-nav transition-opacity duration-150 hov:opacity-70 pc:(w-64px gap-4px pb-7px font-normal text-ink) ${focusRing}`,
+  // Hộp icon cao 22px, căn giữa icon có kích thước khác nhau; làm mốc cho huy hiệu thông báo.
+  'header-nav-icon': 'relative flex h-22px w-full items-center justify-center',
+  // Link ở footer (cỡ chữ đặt trên ul để chiều cao dòng khớp thiết kế).
+  'footer-link': `text-ink transition-colors duration-150 hov:underline ${focusRing}`,
   // Gốc chung của nút: cao 44px ở SP, 50px ở PC.
   btn: `inline-flex items-center justify-center rounded-base px-24px h-44px pc:h-50px text-title-card transition-colors duration-150 ${focusRing}`,
   // Nút chính: nền cam.

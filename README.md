@@ -30,14 +30,14 @@ Hỗ trợ trình duyệt cũ hơn sẽ làm output khó đọc hơn, chỉ làm
 
 Nguồn: Figma "Kawashima HR - Staff Portal" (khung PC 1366px, SP 390px). Giữ nguyên giá trị theo thiết kế.
 
-| Nội dung                                                                            | Vị trí                  |
-| ----------------------------------------------------------------------------------- | ----------------------- |
-| **Giá trị** token: màu, cỡ chữ (SP và PC), bo góc, bóng, chiều cao dòng             | `src/styles/tokens.css` |
-| Tên class ứng với từng token, breakpoint                                            | `uno/tokens.ts`         |
-| Font (Hiragino Sans, dự phòng Noto Sans JP)                                         | `uno/fonts.ts`          |
-| Class ngữ nghĩa và trạng thái: `btn`, `btn-primary`, `btn-outline`, `link`, `field` | `uno/shortcuts.ts`      |
-| Biến thể `hov:` (hover chỉ trên thiết bị có chuột)                                  | `uno/variants.ts`       |
-| Ghép các phần trên                                                                  | `uno.config.ts`         |
+| Nội dung                                                                                                                        | Vị trí                  |
+| ------------------------------------------------------------------------------------------------------------------------------- | ----------------------- |
+| **Giá trị** token: màu, cỡ chữ (SP và PC), bo góc, bóng, chiều cao dòng                                                         | `src/styles/tokens.css` |
+| Tên class ứng với từng token, breakpoint                                                                                        | `uno/tokens.ts`         |
+| Font (Hiragino Sans, dự phòng Noto Sans JP)                                                                                     | `uno/fonts.ts`          |
+| Class ngữ nghĩa và trạng thái: `btn`, `btn-primary`, `btn-outline`, `link`, `field`, `focusable`, `header-nav-*`, `footer-link` | `uno/shortcuts.ts`      |
+| Biến thể `hov:` (hover chỉ trên thiết bị có chuột)                                                                              | `uno/variants.ts`       |
+| Ghép các phần trên                                                                                                              | `uno.config.ts`         |
 
 - **Đổi giá trị** (màu, cỡ chữ...): chỉ sửa `src/styles/tokens.css`. **Thêm token mới**: thêm biến vào `tokens.css`, rồi thêm
   tên vào danh sách tương ứng trong `uno/tokens.ts`. Tên biến không được trùng biến Wind4 tự sinh (`--colors-*`, `--radius-*`,
@@ -59,6 +59,14 @@ Nguồn: Figma "Kawashima HR - Staff Portal" (khung PC 1366px, SP 390px). Giữ 
   thấp hơn chuẩn WCAG AA (4.5:1). Giữ nguyên theo thiết kế, nên báo designer.
 - **CSS của Wind4** viết màu dạng `color-mix(in srgb, var(--color-primary) ...)` kèm khối `@supports` lặp lại với `oklab`.
   Đây là cách Wind4 sinh CSS: dài nhưng đúng, giá trị thật nằm ở các biến `--color-*`.
+
+## Khung trang
+
+- `src/layouts/BaseLayout.astro`: `<html>`, `<head>`, font, CSS. `<body>` là flex cột cao tối thiểu một màn hình (`min-h-dvh`).
+- `src/layouts/PageLayout.astro`: header + `<main class="flex-1">` + footer. `main` giãn hết phần còn lại nên trang
+  ít nội dung thì footer vẫn nằm sát đáy màn hình. Trang thường dùng layout này; trang không có header/footer dùng `BaseLayout`.
+- `src/components/SiteHeader.astro`, `SiteFooter.astro`: header, footer chung (Figma PC 606:4688 / 606:4696, SP 606:3892 / 606:3878).
+  SP chỉ hiện マイページ / お知らせ / メニュー. Nút メニュー chưa có hành vi vì Figma chưa có thiết kế menu.
 
 ## Ảnh và icon
 
@@ -125,6 +133,10 @@ BE copy output một lần, sau đó theo dõi diff của repo output và tự s
   cần khởi động lại; sửa file TS có sẵn thì CSS tự cập nhật.
 - Đường dẫn trong `uno/fonts.ts` là tuyệt đối tính từ thư mục `builder`. Đừng đổi sang tương đối: công cụ nạp cấu hình từ
   thư mục khác (ví dụ extension UnoCSS của VS Code khi mở thư mục cha) sẽ ghi font và cache ra ngoài `builder`.
+
+- `presetWind4` phải để `preflights.theme: true`. Chế độ mặc định chỉ ghi biến theme đang dùng theo thứ tự phát hiện class,
+  mà Astro build các trang song song, nên thứ tự biến trong `:root` đổi giữa các lần build.
+- Không đặt tên shortcut bắt đầu bằng tên biến thể (`focus-`, `hover-`...): UnoCSS hiểu `focus-ring` thành `focus:` + `ring`.
 
 ## Checklist nghiệm thu skeleton
 

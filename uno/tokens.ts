@@ -80,6 +80,7 @@ export const text = Object.fromEntries(
     'body-sm',
     'caption',
     'caption-sm',
+    'footer-link',
     'nav',
     'micro',
   ].map((name) => [name, { fontSize: `var(--font-size-${name})`, lineHeight: 'normal' }]),
