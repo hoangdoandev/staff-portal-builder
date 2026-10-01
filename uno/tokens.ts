@@ -62,13 +62,16 @@ export const colors = {
   ]),
 };
 
-export const radius = cssVars('rounded', ['tag', 'base', 'bar', 'pill']);
+export const radius = cssVars('rounded', ['tag', 'check', 'base', 'bar', 'pill']);
 
 export const shadow = cssVars('box-shadow', ['header', 'title', 'bar', 'back']);
 
 export const leading = cssVars('line-height', ['copy', 'tight']);
 
-/** Cỡ chữ đổi giá trị SP/PC ngay trong tokens.css. `lineHeight: normal` theo thiết kế; đoạn nhiều dòng thêm `leading-copy`. */
+/**
+ * Cỡ chữ và chiều cao dòng (px) đổi giá trị SP/PC ngay trong tokens.css.
+ * Đoạn nhiều dòng thêm `leading-copy` (155% như Figma), `leading-*` luôn thắng chiều cao dòng của `text-*`.
+ */
 export const text = Object.fromEntries(
   [
     'title-period',
@@ -88,5 +91,8 @@ export const text = Object.fromEntries(
     'step',
     'rating',
     'bar-label',
-  ].map((name) => [name, { fontSize: `var(--font-size-${name})`, lineHeight: 'normal' }]),
+  ].map((name) => [
+    name,
+    { fontSize: `var(--font-size-${name})`, lineHeight: `var(--line-height-${name})` },
+  ]),
 );

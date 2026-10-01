@@ -9,8 +9,10 @@
 export type Grade = 'S' | 'A' | 'B' | 'C' | 'D';
 
 interface Props {
-  /** Số thứ tự hiển thị trong vòng tròn, đồng thời dùng làm hậu tố cho name/id của các ô nhập. */
+  /** Số thứ tự hiển thị trong vòng tròn. */
   number: number;
+  /** Hậu tố cho name/id của các ô nhập, phải duy nhất trong trang. Mặc định là `number`. */
+  fieldKey?: string | undefined;
   title: string;
   description: string;
   status: 'done' | 'empty';
@@ -28,6 +30,7 @@ interface Props {
 
 const {
   number,
+  fieldKey = String(number),
   title,
   description,
   status,
@@ -49,8 +52,8 @@ const statusClass = {
   empty: 'bg-danger-tint text-danger-sub',
 } as const;
 
-const commentId = `comment-${number}`;
-const counterId = `comment-${number}-count`;
+const commentId = `comment-${fieldKey}`;
+const counterId = `comment-${fieldKey}-count`;
 ---
 
 <li class="rounded-base border border-line bg-white p-14px pc:p-19px">
@@ -70,7 +73,7 @@ const counterId = `comment-${number}-count`;
         <label>
           <input
             type="radio"
-            name={`rating-${number}`}
+            name={`rating-${fieldKey}`}
             value={grade}
             checked={grade === selected}
             class="peer sr-only"

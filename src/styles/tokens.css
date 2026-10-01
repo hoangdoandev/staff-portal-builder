@@ -55,6 +55,7 @@
 
   /* Bo góc */
   --rounded-tag: 2px;
+  --rounded-check: 3px; /* checkbox */
   --rounded-base: 4px; /* thẻ, nút, ô nhập */
   --rounded-bar: 6px; /* thanh tiến độ */
   --rounded-pill: 21px; /* viên thuốc "配点" */
@@ -87,9 +88,31 @@
   --font-size-step: 12px; /* số trong vòng tròn đánh số tiêu chí, PC cũng 12px */
   --font-size-rating: 14px; /* chữ S〜D trong ô chọn mức đánh giá, PC cũng 14px */
   --font-size-bar-label: 11px; /* dòng nhỏ trên thanh hành động dính đáy ("自己評価 3/11項目") */
+
+  /*
+   * Chiều cao dòng đi kèm từng cỡ chữ: SP. Bằng chiều cao khung chữ "Auto" của Figma (Hiragino Sans) = làm tròn lên cỡ × 1.5,
+   * để vị trí chữ khớp thiết kế khi so pixel. Không dùng `normal` vì mỗi font/trình duyệt tính một kiểu.
+   */
+  --line-height-title-period: 24px;
+  --line-height-title-page: 23px;
+  --line-height-title-section: 21px;
+  --line-height-title-card: 23px;
+  --line-height-total: 21px;
+  --line-height-body: 21px;
+  --line-height-body-sm: 20px;
+  --line-height-caption: 18px;
+  --line-height-caption-sm: 17px;
+  --line-height-footer-link: 17px;
+  --line-height-nav: 15px;
+  --line-height-micro: 15px;
+  --line-height-figure: 18px;
+  --line-height-figure-unit: 15px;
+  --line-height-step: 18px;
+  --line-height-rating: 21px;
+  --line-height-bar-label: 17px;
 }
 
-/* Cỡ chữ: PC (từ 768px, khớp breakpoint `pc` trong uno/tokens.ts) */
+/* Cỡ chữ và chiều cao dòng: PC (từ 768px, khớp breakpoint `pc` trong uno/tokens.ts) */
 @media (min-width: 768px) {
   :root {
     --font-size-title-period: 20px;
@@ -106,5 +129,21 @@
     --font-size-figure: 14px;
     --font-size-figure-unit: 12px;
     --font-size-bar-label: 14px;
+
+    /* Chiều cao dòng: PC (các token không có ở đây giữ giá trị SP) */
+    --line-height-title-period: 30px;
+    --line-height-title-page: 27px;
+    --line-height-title-section: 26px;
+    --line-height-title-card: 24px;
+    --line-height-total: 27px;
+    --line-height-body: 23px;
+    --line-height-body-sm: 21px;
+    --line-height-caption: 20px;
+    --line-height-caption-sm: 18px;
+    --line-height-nav: 18px;
+    --line-height-micro: 17px;
+    --line-height-figure: 21px;
+    --line-height-figure-unit: 18px;
+    --line-height-bar-label: 21px;
   }
 }

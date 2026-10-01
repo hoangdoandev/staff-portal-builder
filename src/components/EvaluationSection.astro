@@ -1,0 +1,22 @@
+---
+/**
+ * Một nhóm trong màn nhập đánh giá: tiêu đề (実践能力, 集計...) kèm viên xám ghi chú, rồi nội dung (slot).
+ * SP: viên xám dạt phải; PC: viên xám ngay sau tiêu đề. Khoảng cách phía trên truyền qua `class`.
+ * Phần tử là flex dọc để thẻ bên trong (đặt `flex-1`) cao bằng nhau khi hai nhóm đứng cạnh nhau trên PC.
+ */
+interface Props {
+  title: string;
+  note?: string | undefined;
+  class?: string | undefined;
+}
+
+const { title, note, class: className } = Astro.props;
+---
+
+<section class:list={['flex flex-col', className]}>
+  <div class="flex items-center justify-between gap-10px pl-2px pc:(justify-start gap-15px pr-2px)">
+    <h2 class="text-title-section font-semibold">{title}</h2>
+    {note && <p class="pill">{note}</p>}
+  </div>
+  <slot />
+</section>
