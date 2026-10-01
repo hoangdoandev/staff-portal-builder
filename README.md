@@ -69,13 +69,13 @@ public/assets/img/
 
 ## Lệnh
 
-| Lệnh           | Tác dụng                                                                        |
-| -------------- | ------------------------------------------------------------------------------- |
-| `pnpm install` | Cài dependency                                                                  |
-| `pnpm dev`     | Chạy song song UnoCSS watch, tsc watch và `astro dev`                           |
-| `pnpm check`   | `astro check` (kiểm tra kiểu cho .astro và .ts)                                 |
-| `pnpm build`   | Sinh CSS + JS, build Astro, format `dist/` bằng Prettier                        |
-| `pnpm release` | check, build hai lần so sánh, rồi đồng bộ `dist/` sang `../html` (không commit) |
+| Lệnh           | Tác dụng                                                                                            |
+| -------------- | --------------------------------------------------------------------------------------------------- |
+| `pnpm install` | Cài dependency                                                                                      |
+| `pnpm dev`     | Sinh CSS một lần, rồi chạy song song UnoCSS watch, tsc watch và `astro dev` (http://localhost:4321) |
+| `pnpm check`   | `astro check` (kiểm tra kiểu cho .astro và .ts)                                                     |
+| `pnpm build`   | Sinh CSS + JS, build Astro, format `dist/` bằng Prettier                                            |
+| `pnpm release` | check, build hai lần so sánh, rồi đồng bộ `dist/` sang `../html` (không commit)                     |
 
 ## Quy trình bàn giao cho BE
 
@@ -107,6 +107,11 @@ BE copy output một lần, sau đó theo dõi diff của repo output và tự s
   Luôn đi qua `pnpm release` (`rsync --delete --exclude .git`).
 - pnpm 11 coi build script bị bỏ qua là lỗi. `esbuild` đã được cho phép trong `pnpm-workspace.yaml`.
 - Prettier 3 bỏ qua file trong `.gitignore`, mà `dist/` bị ignore, nên `format:dist` dùng `--ignore-path .prettierignore`.
+- Astro 7 có thể chạy `astro dev` dưới nền (khi chạy bằng agent hoặc tuỳ môi trường) rồi thoát mã 0. Vì vậy `pnpm dev`
+  dùng `concurrently --kill-others-on-fail`: chỉ tắt hết khi có tiến trình lỗi, không tắt khi `astro dev` thoát mã 0.
+  Dừng server nền bằng `pnpm exec astro dev stop`; không tắt server dev đang chạy mà bạn không biết của ai.
+- Script `uno` (sinh một lần kèm tách `fonts.css`) khác `uno:generate` (chỉ sinh) và `uno:watch`. Đừng thêm lệnh vào
+  sau `uno` rồi truyền `--watch`: cờ sẽ rơi vào lệnh cuối chứ không phải UnoCSS.
 
 ## Checklist nghiệm thu skeleton
 
