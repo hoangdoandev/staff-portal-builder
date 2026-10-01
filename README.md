@@ -3,6 +3,8 @@
 Source Astro + UnoCSS + TypeScript để cắt giao diện Staff Portal (Sunnylife Spot). Build ra HTML/CSS/JS thuần,
 đã format, để đội BE copy và tự theo dõi thay đổi.
 
+**Quy tắc bắt buộc (quy trình nhánh, không tự merge bên html...): xem [`AGENTS.md`](AGENTS.md).**
+
 Repo này **chỉ FE dùng**. BE chỉ thấy repo output `sunnylife-spot_html`: review PR theo từng màn, rồi theo dõi nhánh `develop`.
 
 ## Bố trí thư mục

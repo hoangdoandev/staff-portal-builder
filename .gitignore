@@ -2,11 +2,19 @@ node_modules/
 dist/
 .astro/
 
-# Sinh ra bởi pnpm build:assets (UnoCSS CLI + tsc), không commit
+# Sinh ra bởi pnpm build / pnpm dev (tsc và plugin font của UnoCSS), không commit
 public/assets/js/
 public/assets/fonts/
 
+# File rác của hệ điều hành và editor
 .DS_Store
+._*
+Thumbs.db
+desktop.ini
+.idea/
+.vscode/
+*.swp
+
 *.log
 .env
 .env.*
