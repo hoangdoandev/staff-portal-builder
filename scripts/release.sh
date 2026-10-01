@@ -68,6 +68,6 @@ git -C "$TARGET" status --short
 if [ -z "$(git -C "$TARGET" status --porcelain)" ]; then
   echo "(không có thay đổi, không cần commit)"
 else
-  echo "Tiếp theo: commit 'build: ... (builder@$(git rev-parse --short HEAD))', push nhánh, mở PR base develop."
+  echo "Tiếp theo: commit 'build: ... (builder@$(git rev-parse --short HEAD))', push nhánh, mở PR base ${BASE#origin/} (nếu nhánh mới tạo lần này)."
   echo "Không tự merge PR bên html: BE review rồi merge."
 fi
