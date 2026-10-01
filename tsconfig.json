@@ -1,6 +1,6 @@
 {
   "extends": "astro/tsconfigs/strictest",
-  "include": [".astro/types.d.ts", "src/**/*", "*.config.ts"],
+  "include": [".astro/types.d.ts", "src/**/*", "uno/**/*.ts", "*.config.ts"],
   "exclude": ["dist", "public"],
   "compilerOptions": {
     "lib": ["ESNext", "DOM", "DOM.Iterable"]
