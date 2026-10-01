@@ -54,6 +54,11 @@ export const screenGroups: ScreenGroup[] = [
         path: '/evaluation/self-input.html',
         figma: { pc: '606:4796', sp: '606:3964' },
       },
+      {
+        title: '一次評価入力画面',
+        path: '/evaluation/primary-input.html',
+        figma: { pc: '606:4884', sp: '606:4049' },
+      },
     ],
   },
 ];

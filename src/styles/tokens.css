@@ -55,6 +55,7 @@
 
   /* Bo góc */
   --rounded-tag: 2px;
+  --rounded-check: 3px; /* checkbox */
   --rounded-base: 4px; /* thẻ, nút, ô nhập */
   --rounded-bar: 6px; /* thanh tiến độ */
   --rounded-pill: 21px; /* viên thuốc "配点" */

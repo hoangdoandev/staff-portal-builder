@@ -43,6 +43,14 @@ export const shortcuts = {
     'btn border border-primary bg-white text-primary hov:bg-primary-tint active:bg-primary-tint-active disabled:(border-disabled text-ink-disabled cursor-not-allowed)',
   // Link xanh.
   link: `text-secondary transition-colors duration-150 hov:(text-secondary-hover underline) ${focusRing}`,
+  // Ô chọn ngày <input type="date">: nền trắng viền xám, cao 38px ở SP, 42px ở PC. Icon lịch của trình duyệt (Chrome, Edge)
+  // thay bằng icon thiết kế; Safari/Firefox giữ giao diện riêng. Định dạng ngày hiển thị theo ngôn ngữ của trình duyệt.
+  'field-date': `block h-38px w-full rounded-base border border-line bg-white px-10px text-body text-ink transition-colors duration-150 focus:(border-primary outline-none ring-2 ring-primary/20) pc:h-42px [&::-webkit-calendar-picker-indicator]:(m-0 size-17px cursor-pointer bg-[url(/assets/img/icon/icon-calendar.svg)] bg-[length:13px_14px] bg-center bg-no-repeat p-0 pc:size-18px pc:bg-[length:14px_15px])`,
+  // Ô số giữa hai nút −/+ (NumberStepper): ẩn nút tăng giảm mặc định của trình duyệt.
+  'stepper-input':
+    'w-0 min-w-0 flex-1 bg-transparent text-center text-body text-ink outline-none [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none',
+  // Checkbox 18px: chưa chọn viền xám, đã chọn nền xanh có dấu tick trắng.
+  checkbox: `size-18px shrink-0 cursor-pointer appearance-none rounded-check border border-line bg-white bg-center bg-no-repeat transition-colors duration-150 checked:(border-secondary bg-secondary bg-[url(/assets/img/icon/icon-check.svg)]) ${focusRing}`,
   // Ô nhập, textarea. Lỗi: đặt aria-invalid="true" hoặc class is-error trên phần tử.
   field:
     'w-full rounded-base border border-line-soft bg-surface-field px-14px py-14px text-body leading-copy text-ink placeholder:text-ink-mute transition-colors duration-150 focus:(border-primary outline-none ring-2 ring-primary/20) aria-[invalid=true]:(border-danger-sub bg-danger-tint) [&.is-error]:(border-danger-sub bg-danger-tint)',

@@ -1,0 +1,61 @@
+---
+/**
+ * Bảng 集計 (Figma 一次評価入力画面): điểm theo từng カテゴリ ở các cột 自己 / 一次 / 最終.
+ * Dòng cao 38px ở SP, 40px ở PC, kẻ đường mảnh phía trên. Cột điểm rộng 54px (SP) / 63px (PC),
+ * phần đệm trái để tâm chữ trùng tâm tiêu đề cột như thiết kế.
+ */
+export interface ScoreRow {
+  label: string;
+  /** Viên xám sau tên, ví dụ "配点 20%". */
+  weight?: string | undefined;
+  /** Giá trị theo thứ tự cột; "-" khi chưa có. */
+  values: string[];
+}
+
+interface Props {
+  caption: string;
+  columns: string[];
+  rows: ScoreRow[];
+}
+
+const { caption, columns, rows } = Astro.props;
+const valueCell = 'w-54px pl-16px text-center pc:(w-63px pl-7px)';
+---
+
+<table class="w-full border-separate border-spacing-0">
+  <caption class="sr-only">{caption}</caption>
+  <thead>
+    <tr class="text-caption leading-copy text-ink-sub">
+      <th scope="col" class="pb-8px text-left font-normal">
+        カテゴリ
+      </th>
+      {columns.map((column) => (
+        <th scope="col" class:list={['pb-8px font-normal', valueCell]}>
+          {column}
+        </th>
+      ))}
+    </tr>
+  </thead>
+  <tbody class="text-body">
+    {rows.map((row) => (
+      <tr>
+        <th
+          scope="row"
+          class="h-38px border-t border-line-hair p-0 text-left font-normal pc:h-40px"
+        >
+          <span class="flex items-center gap-11px">
+            {row.label}
+            {row.weight && (
+              <span class="inline-flex h-20px items-center rounded-pill bg-surface-pill px-8px text-caption-sm">
+                {row.weight}
+              </span>
+            )}
+          </span>
+        </th>
+        {row.values.map((value) => (
+          <td class:list={['border-t border-line-hair py-0', valueCell]}>{value}</td>
+        ))}
+      </tr>
+    ))}
+  </tbody>
+</table>

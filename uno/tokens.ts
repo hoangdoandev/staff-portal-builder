@@ -62,7 +62,7 @@ export const colors = {
   ]),
 };
 
-export const radius = cssVars('rounded', ['tag', 'base', 'bar', 'pill']);
+export const radius = cssVars('rounded', ['tag', 'check', 'base', 'bar', 'pill']);
 
 export const shadow = cssVars('box-shadow', ['header', 'title', 'bar', 'back']);
 

@@ -1,0 +1,314 @@
+---
+/**
+ * 一次評価入力画面 (Figma PC 606:4884, SP 606:4049): một次 đánh giá cấp dưới cho một kỳ.
+ * Đầu trang: 対象期間, 評価対象 (người được đánh giá) và tiến độ. Tiếp theo các nhóm tiêu chí (thẻ giống màn tự đánh giá),
+ * 特別加点 (ô số −/+), 集計, 総評, フィードバック面談の記録, 個人目標. PC: các nhóm xếp 2 cột trong vùng 1000px; SP: 1 cột.
+ * Thanh 保存 / 提出する cố định ở đáy (FixedActionBar); 提出する bị vô hiệu như thiết kế (chưa nhập đủ hạng mục).
+ * Dữ liệu dưới đây là nội dung mẫu theo thiết kế, BE thay bằng dữ liệu thật.
+ *
+ * Lệch thiết kế có chủ ý: nhãn ô thứ hai của 個人目標 trên PC ghi trùng "今期の個人目標", dùng "目標の背景・理由" theo SP.
+ */
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import EvaluationCriterionCard, {
+  type Grade,
+} from '../../components/EvaluationCriterionCard.astro';
+import EvaluationScoreTable, { type ScoreRow } from '../../components/EvaluationScoreTable.astro';
+import EvaluationSection from '../../components/EvaluationSection.astro';
+import FixedActionBar from '../../components/FixedActionBar.astro';
+import NumberStepper from '../../components/NumberStepper.astro';
+import PageTitle from '../../components/PageTitle.astro';
+import ProgressBar from '../../components/ProgressBar.astro';
+import PageLayout from '../../layouts/PageLayout.astro';
+
+type CriterionProps = Parameters<typeof EvaluationCriterionCard>[0];
+
+interface CriterionGroup {
+  title: string;
+  weight: string;
+  /** Khung xanh dưới tiêu đề nhóm, mỗi phần tử một dòng (SP xuống dòng, PC nối bằng khoảng trắng toàn góc). */
+  notice?: string[];
+  items: CriterionProps[];
+}
+
+/** Tiêu chuẩn S〜D mẫu (thiết kế không hiện danh sách này; nội dung lấy theo mức C đang chọn ở tiêu chí 1). */
+const sampleCriteria: Record<Grade, string> = {
+  S: '頻度の低い手続きも含めて独力で正確に処理し、運用の改善まで主導している',
+  A: '労務・庶務を独力で正確に処理し、規程の確認も短時間で行える',
+  B: '日常の労務・庶務を独力で処理し、判断を要する場合は上席者に相談できる',
+  C: '日常の労務・庶務は独力で処理できるが、頻度の低い手続きでは規程の確認に時間を要することがある',
+  D: '日常の労務・庶務の処理に漏れや遅れがあり、上席者の確認が必要',
+};
+
+const groups: CriterionGroup[] = [
+  {
+    title: '実践能力',
+    weight: '配点 25%（3項目 各8.3%）',
+    items: [
+      {
+        number: 1,
+        title: '労務・庶務管理',
+        description: '勤怠・入退職手続き・社内規程管理',
+        status: 'done',
+        statusLabel: '入力済み',
+        criteria: sampleCriteria,
+        selected: 'C',
+        comment: '例）9月の◯◯で、△△を自ら段取りして完了させた',
+      },
+      {
+        number: 2,
+        title: '接遇・相談対応',
+        description: 'ご入居者・ご家族への丁寧な説明と相談対応',
+        status: 'empty',
+        statusLabel: '未入力',
+        criteria: sampleCriteria,
+      },
+    ],
+  },
+  {
+    title: '数値KRA',
+    weight: '配点 35%（3項目 各11.7%）',
+    notice: [
+      '当事業所の数値目標',
+      '① 入居率95%以上の達成（事業所別目標）',
+      '② 重大事故・苦情0件／ヒヤリハットの早期共有',
+    ],
+    items: [
+      {
+        number: 1,
+        fieldKey: 'kra-1',
+        title: '入居率95%以上の達成',
+        description: '月次の入居率と見学・契約状況を確認する',
+        status: 'empty',
+        statusLabel: '未入力',
+        criteria: sampleCriteria,
+      },
+      {
+        number: 2,
+        fieldKey: 'kra-2',
+        title: '重大事故・苦情0件',
+        description: 'リスクの早期発見とヒヤリハット共有を徹底する',
+        status: 'empty',
+        statusLabel: '未入力',
+        criteria: sampleCriteria,
+      },
+    ],
+  },
+];
+
+const scoreRows: ScoreRow[] = [
+  { label: '実践能力', weight: '配点 20%', values: ['5', '6', '-'] },
+  { label: '数値KRA', weight: '配点 15%', values: ['20', '1', '-'] },
+  { label: '行動', weight: '配点 35%', values: ['20', '1', '-'] },
+  { label: '総合得点', values: ['123', '321', '-'] },
+  { label: '評価ランク', values: ['A', 'S', '-'] },
+];
+
+const personalGoals = [
+  { id: 'goal-target', label: '今期の個人目標' },
+  { id: 'goal-reason', label: '目標の背景・理由' },
+  { id: 'goal-progress', label: '進捗・振り返り' },
+  { id: 'goal-plan', label: '今後の取り組み方針' },
+];
+
+const formId = 'primary-evaluation-form';
+const card = 'rounded-base border border-line bg-white p-14px pc:p-19px';
+const commentPlaceholder = '評点の全体像と、次期に期待することを書いてください';
+---
+
+<PageLayout title="一次評価入力｜人事評価">
+  <Breadcrumb
+    items={[
+      { label: 'HOME', href: '/' },
+      { label: '人事評価', href: '/evaluation/primary.html' },
+      { label: '2026年度 上期 一次評価' },
+    ]}
+  />
+  <PageTitle title="2026年度 上期 一次評価" backHref="/evaluation/primary.html" />
+
+  <form
+    id={formId}
+    action="#"
+    method="post"
+    class="mx-10px mb-56px mt-30px pc:(mx-auto mb-100px mt-24px w-1000px)"
+  >
+    <div class="pc:(flex items-center gap-9px px-2px)">
+      <p class="tag">対象期間</p>
+      <div class="mt-6px flex items-end justify-between gap-10px pc:(mt-0 justify-start gap-20px)">
+        <p class="text-title-period font-semibold">2026年度 上期</p>
+        <p class="text-caption text-ink-sub">2026年4月1日〜9月30日</p>
+      </div>
+    </div>
+
+    <div class="mt-30px pc:(flex items-start pl-2px)">
+      <p class="tag pc:mt-4px">評価対象</p>
+      <p class="mt-6px text-title-period font-semibold pc:(ml-9px mt-0)">永田 丸子</p>
+      <p class="mt-5px text-caption leading-copy text-ink-sub pc:(ml-20px mt-4px)">
+        <span class="block">サニーライフおゆみ野</span>
+        <span class="block">支配人(課長級)／中間管理職</span>
+        <span class="block">介護支援専門職／G4</span>
+      </p>
+      <div class="mt-16px pl-2px pr-5px pc:(ml-auto mt-6px h-58px w-588px border-l border-line-hair pl-49px pr-0 pt-6px)">
+        <p class="text-caption leading-copy">一次評価の進捗</p>
+        <div class="pc:-mt-3px">
+          <ProgressBar label="一次評価の進捗" percent={67} />
+        </div>
+      </div>
+    </div>
+
+    {groups.map((group, index) => (
+      <EvaluationSection
+        title={group.title}
+        note={group.weight}
+        class={index === 0 ? 'mt-35px pc:mt-50px' : 'mt-30px pc:mt-50px'}
+      >
+        {group.notice && (
+          <p class="mt-11px rounded-base bg-info-tint px-15px pb-11px pt-9px text-body-sm leading-copy text-info pc:(ml-2px py-12px)">
+            {group.notice.map((line, lineIndex) => (
+              <Fragment>
+                {lineIndex > 0 && <span class="hidden pc:inline">　</span>}
+                <span class="block pc:inline">{line}</span>
+              </Fragment>
+            ))}
+          </p>
+        )}
+        <ul
+          class:list={[
+            'grid gap-15px pc:(grid-cols-2 gap-20px)',
+            group.notice ? 'mt-15px' : 'mt-9px pc:mt-11px',
+          ]}
+        >
+          {group.items.map((item) => (
+            <EvaluationCriterionCard {...item} />
+          ))}
+        </ul>
+      </EvaluationSection>
+    ))}
+
+    <div class="pc:(grid grid-cols-2 gap-x-20px)">
+      <EvaluationSection title="特別加点" note="1〜10点" class="mt-30px pc:mt-50px">
+        <div class:list={[card, 'mt-9px flex-1 pc:mt-11px']}>
+          <p class="text-body leading-copy">
+            通常の評価項目では評価しきれない特別な貢献、新たな取り組み、組織への波及効果の高い成果があった場合に加点します。
+          </p>
+          <label for="bonus-point" class="mt-20px block text-caption leading-copy">
+            加点（1次評価）
+          </label>
+          <NumberStepper
+            id="bonus-point"
+            name="bonus-point"
+            value={1}
+            min={1}
+            max={10}
+            class="mt-5px pc:mt-4px"
+          />
+        </div>
+      </EvaluationSection>
+
+      <EvaluationSection title="集計" note="自己／一次／最終" class="mt-30px pc:mt-50px">
+        <div class="mt-9px flex-1 rounded-base border border-line bg-white px-14px pb-5px pt-11px pc:(mt-11px px-19px pb-6px pt-19px)">
+          <EvaluationScoreTable
+            caption="集計"
+            columns={['自己', '一次', '最終']}
+            rows={scoreRows}
+          />
+        </div>
+      </EvaluationSection>
+
+      <EvaluationSection title="総評" note="1次評価" class="mt-30px pc:mt-50px">
+        <div class:list={[card, 'mt-9px flex flex-1 flex-col pc:mt-11px']}>
+          <label for="overall-comment" class="text-caption leading-copy">
+            全体を通してのコメント
+          </label>
+          <textarea
+            id="overall-comment"
+            name="overall-comment"
+            rows="4"
+            placeholder={commentPlaceholder}
+            class="field mt-5px block h-124px resize-y pc:(h-auto min-h-124px flex-1)"
+          ></textarea>
+        </div>
+      </EvaluationSection>
+
+      <EvaluationSection
+        title="フィードバック面談の記録"
+        note="記入区分によらず共通"
+        class="mt-30px pc:mt-50px"
+      >
+        <div class:list={[card, 'mt-9px flex-1 pc:mt-11px']}>
+          <p class="text-body leading-copy">
+            一次評価者が面談を行ったあとに記入します。評価点には反映しません。
+          </p>
+          <input
+            type="date"
+            name="feedback-date"
+            value="2026-07-01"
+            aria-label="面談日"
+            class="field-date mt-15px pc:mt-10px"
+          />
+          <label for="feedback-summary" class="mt-20px block text-caption leading-copy">
+            面談の要点（伝えたこと・本人の受けとめ・次期の合意事項）
+          </label>
+          <textarea
+            id="feedback-summary"
+            name="feedback-summary"
+            rows="3"
+            placeholder={commentPlaceholder}
+            class="field mt-5px block h-116px resize-y pc:(mt-4px h-99px)"
+          ></textarea>
+          <label class="mt-12px flex cursor-pointer items-start gap-5px text-body pc:mt-10px">
+            <input type="checkbox" name="feedback-explained" checked class="checkbox mt-2px" />
+            本人に評価結果を説明し、内容を確認していただきました
+          </label>
+        </div>
+      </EvaluationSection>
+    </div>
+
+    <EvaluationSection title="個人目標" note="評価点に反映しない" class="mt-30px pc:mt-50px">
+      <div class:list={[card, 'mt-9px grid gap-20px pc:(mt-11px grid-cols-2)']}>
+        {personalGoals.map((goal) => (
+          <div>
+            <label for={goal.id} class="block text-caption leading-copy">
+              {goal.label}
+            </label>
+            <textarea
+              id={goal.id}
+              name={goal.id}
+              rows="4"
+              class="field mt-5px block h-102px resize-y pc:h-200px"
+            ></textarea>
+          </div>
+        ))}
+      </div>
+    </EvaluationSection>
+  </form>
+  <script is:inline defer src="/assets/js/char-counter.js"></script>
+  <script is:inline defer src="/assets/js/number-stepper.js"></script>
+  <FixedActionBar slot="bottom-bar">
+    <p class="text-bar-label leading-tight text-ink-sub pc:(flex gap-19px leading-copy)">
+      <span class="block">評価対象 永田 丸子</span>
+      <span class="block">1次評価 3/11項目</span>
+    </p>
+    <p class="text-total font-semibold leading-copy">総合 19点・D</p>
+    <Fragment slot="actions">
+      <button
+        type="submit"
+        form={formId}
+        name="action"
+        value="save"
+        class="btn-outline w-72px pc:w-73px"
+      >
+        保存
+      </button>
+      <button
+        type="submit"
+        form={formId}
+        name="action"
+        value="submit"
+        disabled
+        class="btn-primary w-150px pc:w-380px"
+      >
+        提出する
+      </button>
+    </Fragment>
+  </FixedActionBar>
+</PageLayout>

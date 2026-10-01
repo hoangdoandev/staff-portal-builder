@@ -1,0 +1,50 @@
+---
+/**
+ * Ô nhập số có nút − / + hai bên (Figma 一次評価入力画面: 加点). Cao 38px ở SP, 40px ở PC; mỗi nút rộng 38px kể cả viền.
+ * Bấm nút tăng/giảm 1 trong khoảng min〜max (script number-stepper.js); vẫn gõ số trực tiếp được.
+ * Nhãn đặt bên ngoài bằng <label for={id}>.
+ */
+interface Props {
+  id: string;
+  name: string;
+  value: number;
+  min: number;
+  max: number;
+  class?: string | undefined;
+}
+
+const { id, name, value, min, max, class: className } = Astro.props;
+---
+
+<div
+  class:list={['flex h-38px rounded-base border border-line bg-white pc:h-40px', className]}
+  data-stepper
+>
+  <button
+    type="button"
+    class="flex w-37px shrink-0 items-center justify-center border-r border-line transition-colors duration-150 hov:bg-surface-field focusable"
+    aria-label="1減らす"
+    aria-controls={id}
+    data-stepper-step="-1"
+  >
+    <img src="/assets/img/icon/icon-minus.svg" alt="" width="18" height="18" />
+  </button>
+  <input
+    type="number"
+    id={id}
+    name={name}
+    value={value}
+    min={min}
+    max={max}
+    class="stepper-input"
+  />
+  <button
+    type="button"
+    class="flex w-37px shrink-0 items-center justify-center border-l border-line transition-colors duration-150 hov:bg-surface-field focusable"
+    aria-label="1増やす"
+    aria-controls={id}
+    data-stepper-step="1"
+  >
+    <img src="/assets/img/icon/icon-plus.svg" alt="" width="18" height="18" />
+  </button>
+</div>
