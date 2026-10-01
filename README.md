@@ -20,6 +20,12 @@ Staff Portal/            thư mục thường (không phải git repo), nơi ch�
 - Node >= 24.14 (`.nvmrc`), pnpm 11.9 (`packageManager`). Mọi phiên bản dependency được ghim chính xác.
 - TypeScript ghim 6.0.3, **không nâng lên 7.x**: `astro check` chưa hỗ trợ TypeScript 7.0.
 
+## Trình duyệt hỗ trợ
+
+Nhắm tới trình duyệt hiện đại (Chrome, Safari, Edge, Firefox bản mới; iOS Safari và Android Chrome).
+`presetWind4` sinh CSS dùng `@layer`, `@property` và màu hiện đại, JS là ES2019 dạng ES module nên IE11 không được hỗ trợ.
+Hỗ trợ trình duyệt cũ hơn sẽ làm output khó đọc hơn, chỉ làm khi có yêu cầu cụ thể từ phía Sunnylife.
+
 ## Lệnh
 
 | Lệnh           | Tác dụng                                                                        |
@@ -43,6 +49,7 @@ BE copy output một lần, sau đó theo dõi diff của repo output và tự s
 
 - **CSS**: UnoCSS CLI quét `src/**/*.{astro,ts}`, ghi ra `public/assets/css/style.css` (một file, không minify).
   Component lặp lại dùng `shortcuts` trong `uno.config.ts` (class ngữ nghĩa như `btn-primary`), layout nhỏ lẻ dùng utility.
+- **Reset CSS**: `presetWind4` đã kèm reset trong `style.css`, không cần file reset riêng.
 - **JS**: viết TypeScript trong `src/scripts/`, `tsc` biên dịch ra `public/assets/js/` (ES2019, ES module, giữ comment).
   Trong trang dùng `<script is:inline type="module" src="/assets/js/...">`.
   **Không dùng `<script>` thường trong `.astro`**: Astro sẽ bundle, đổi tên có hash và minify.

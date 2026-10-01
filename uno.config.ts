@@ -1,9 +1,9 @@
-import { defineConfig, presetWind3, transformerDirectives, transformerVariantGroup } from 'unocss';
+import { defineConfig, presetWind4, transformerDirectives, transformerVariantGroup } from 'unocss';
 
-// presetWind3: CSS dùng rgb()/rem thông thường, chạy tốt trên trình duyệt mobile cũ
-// và output dễ đọc hơn so với wind4 (CSS variables, @layer, oklch).
+// presetWind4 đã kèm reset trong preflight (box-sizing, margin...), không cần file reset riêng.
+// CSS dùng @layer, @property, CSS variables và màu hiện đại, nhắm tới trình duyệt hiện đại.
 export default defineConfig({
-  presets: [presetWind3()],
+  presets: [presetWind4()],
   transformers: [transformerDirectives(), transformerVariantGroup()],
   // Class ngữ nghĩa cho component lặp lại: BE sửa một chỗ trong CSS thay vì sửa nhiều class trong HTML.
   shortcuts: {
