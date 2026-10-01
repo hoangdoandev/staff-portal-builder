@@ -85,5 +85,8 @@ export const text = Object.fromEntries(
     'micro',
     'figure',
     'figure-unit',
+    'step',
+    'rating',
+    'bar-label',
   ].map((name) => [name, { fontSize: `var(--font-size-${name})`, lineHeight: 'normal' }]),
 );

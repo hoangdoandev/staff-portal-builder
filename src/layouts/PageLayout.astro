@@ -3,6 +3,8 @@
  * Khung trang chung: header, main, footer.
  * main giãn hết phần còn lại (body là flex cột cao tối thiểu một màn hình, xem BaseLayout),
  * nên trang ít nội dung thì footer vẫn nằm sát đáy màn hình.
+ * Slot "bottom-bar": thanh cố định ở đáy màn hình (ví dụ FixedActionBar). Khi có, thêm khoảng trống sau footer
+ * bằng chiều cao thanh (74px SP / 80px PC, như Figma) để thanh không che footer khi cuộn tới cuối trang.
  */
 import type { ComponentProps } from 'astro/types';
 import SiteFooter from '../components/SiteFooter.astro';
@@ -18,4 +20,10 @@ type Props = ComponentProps<typeof BaseLayout>;
     <slot />
   </main>
   <SiteFooter />
+  {Astro.slots.has('bottom-bar') && (
+    <Fragment>
+      <div class="h-74px shrink-0 pc:h-80px" aria-hidden="true"></div>
+      <slot name="bottom-bar" />
+    </Fragment>
+  )}
 </BaseLayout>
