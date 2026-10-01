@@ -27,7 +27,8 @@ case "$branch" in
     ;;
 esac
 
-if [ -n "$(git -C "$TARGET" status --porcelain)" ]; then
+# AGENTS.md và CLAUDE.md ở repo output không được track (chỉ nằm trên đĩa cho agent đọc), nên bỏ qua khi kiểm tra.
+if [ -n "$(git -C "$TARGET" status --porcelain -- . ':!AGENTS.md' ':!CLAUDE.md')" ]; then
   echo "ERROR: '$TARGET' còn thay đổi chưa commit. Commit hoặc dọn trước khi release." >&2
   exit 1
 fi
@@ -67,8 +68,8 @@ rsync -a --delete \
   dist/ "$TARGET/"
 
 echo "==> Thay đổi ở $TARGET (nhánh $branch):"
-git -C "$TARGET" status --short
-if [ -z "$(git -C "$TARGET" status --porcelain)" ]; then
+git -C "$TARGET" status --short -- . ':!AGENTS.md' ':!CLAUDE.md'
+if [ -z "$(git -C "$TARGET" status --porcelain -- . ':!AGENTS.md' ':!CLAUDE.md')" ]; then
   echo "(không có thay đổi, không cần commit)"
 else
   echo "Tiếp theo: commit 'build: ... (builder@$(git rev-parse --short HEAD))', push nhánh, mở PR base ${BASE#origin/} (nếu nhánh mới tạo lần này)."
