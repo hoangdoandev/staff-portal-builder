@@ -1,4 +1,6 @@
 ---
+import '../styles/tokens.css';
+
 interface Props {
   title: string;
   description?: string;
@@ -15,10 +17,12 @@ const { title, description = '' } = Astro.props;
     <meta name="format-detection" content="telephone=no" />
     <meta name="description" content={description} />
     <title>{title}</title>
-    <link rel="stylesheet" href="/assets/css/fonts.css" />
-    <link rel="stylesheet" href="/assets/css/style.css" />
+    {
+      /* @font-face được tách ra fonts.css sau khi build (scripts/split-fonts-css.mjs); lúc dev chúng nằm trong CSS của Vite. */
+      import.meta.env.PROD && <link rel="stylesheet" href="/assets/css/fonts.css" />
+    }
   </head>
-  <body>
+  <body class="font-sans text-body text-ink">
     <slot />
   </body>
 </html>

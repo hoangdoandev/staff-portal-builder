@@ -1,0 +1,100 @@
+/*
+ * Token thiết kế lấy từ Figma "Kawashima HR - Staff Portal" (khung PC 1366px, SP 390px).
+ * Đây là nơi duy nhất chứa giá trị: đổi ở đây là cả giao diện đổi theo.
+ * Giá trị ghi "ngoài thiết kế" là trạng thái hover/active do FE bổ sung vì Figma không có.
+ *
+ * Tên biến cố ý khác biến Wind4 tự sinh (--colors-*, --radius-*, --shadow-*, --text-*, --leading-*)
+ * để tránh vòng lặp var(). Tên class tương ứng khai báo trong uno/tokens.ts.
+ */
+
+:root {
+  /* Màu chính (hai biến duy nhất có trong Figma) */
+  --color-primary: #f57a38;
+  --color-primary-hover: #e86a28; /* ngoài thiết kế */
+  --color-primary-active: #d55e20; /* ngoài thiết kế */
+  --color-primary-tint: #fff6f2; /* nền khung tiêu chí đang chọn, hover nút viền */
+  --color-primary-tint-active: #ffe9dd; /* ngoài thiết kế */
+  --color-secondary: #3b8eff; /* link, checkbox */
+  --color-secondary-hover: #2a78e4; /* ngoài thiết kế */
+
+  /* Chữ */
+  --color-ink: #333333;
+  --color-ink-sub: #666666;
+  --color-ink-mute: #999999;
+  --color-ink-disabled: #b2b2b2;
+  --color-ink-nav: #878787; /* nhãn nav ở SP */
+  --color-ink-faint: #aeaeae; /* bản quyền ở SP */
+
+  /* Viền và đường kẻ */
+  --color-line: #d1d1d1; /* viền thẻ, nút chọn */
+  --color-line-soft: #e6e6e6; /* viền textarea */
+  --color-line-hair: #f0f0f0; /* đường kẻ phân cách 1px */
+
+  /* Nền */
+  --color-surface-tag: #f2f2f2;
+  --color-surface-pill: #f0f0f0;
+  --color-surface-field: #f7f7f7; /* nền textarea */
+  --color-surface-track: #ececec; /* nền thanh tiến độ */
+  --color-surface-breadcrumb: #efefef;
+  --color-surface-title: #f9f9f9; /* thanh tiêu đề trang */
+  --color-surface-footer: #fcfcfc;
+
+  /* Trạng thái */
+  --color-danger: #ff4a4a;
+  --color-danger-sub: #f76862;
+  --color-danger-tint: #fef6f5;
+  --color-success: #00af0d;
+  --color-success-tint: #ecf8ec;
+  --color-warning: #f39515;
+  --color-warning-tint: #fff9f1;
+  --color-info: #556984;
+  --color-info-tint: #f3f8fe;
+  --color-info-key: #5a80b4;
+  --color-disabled: #c4c4c4; /* nền nút gửi vô hiệu */
+  --color-badge: #ff0000; /* huy hiệu số thông báo */
+
+  /* Bo góc */
+  --rounded-tag: 2px;
+  --rounded-base: 4px; /* thẻ, nút, ô nhập */
+  --rounded-bar: 6px; /* thanh tiến độ */
+  --rounded-pill: 21px; /* viên thuốc "配点" */
+
+  /* Bóng */
+  --box-shadow-header: 0 0 2px rgba(0, 0, 0, 0.15); /* header SP */
+  --box-shadow-title: 0 2px 2px rgba(0, 0, 0, 0.05); /* thanh tiêu đề trang */
+  --box-shadow-bar: 0 -3px 3px rgba(0, 0, 0, 0.05); /* thanh hành động dính đáy */
+
+  /* Chiều cao dòng */
+  --line-height-copy: 1.55; /* đoạn nhiều dòng */
+  --line-height-tight: 1.33;
+
+  /* Cỡ chữ: SP (dưới 768px) */
+  --font-size-title-period: 16px;
+  --font-size-title-page: 15px;
+  --font-size-title-section: 14px;
+  --font-size-title-card: 15px; /* tiêu đề thẻ, chữ trong nút */
+  --font-size-total: 14px; /* "総合 19点・D" */
+  --font-size-body: 14px;
+  --font-size-body-sm: 13px;
+  --font-size-caption: 12px;
+  --font-size-caption-sm: 11px; /* tag, chip, footer */
+  --font-size-nav: 10px; /* nhãn icon header */
+  --font-size-micro: 10px; /* số trong huy hiệu */
+}
+
+/* Cỡ chữ: PC (từ 768px, khớp breakpoint `pc` trong uno/tokens.ts) */
+@media (min-width: 768px) {
+  :root {
+    --font-size-title-period: 20px;
+    --font-size-title-page: 18px;
+    --font-size-title-section: 17px;
+    --font-size-title-card: 16px;
+    --font-size-total: 18px;
+    --font-size-body: 15px;
+    --font-size-body-sm: 14px;
+    --font-size-caption: 13px;
+    --font-size-caption-sm: 12px;
+    --font-size-nav: 12px;
+    --font-size-micro: 11px;
+  }
+}
