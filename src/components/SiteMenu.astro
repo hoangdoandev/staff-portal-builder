@@ -1,0 +1,60 @@
+---
+/**
+ * Menu mở từ nút メニュー trên header (Figma navi SP 606:3714). Script: site-menu.js.
+ * - SP: phủ toàn bộ màn hình phía dưới header. PC (không có trong Figma): cùng nội dung, panel rộng 390px sát phải,
+ *   phần còn lại phủ nền mờ; bấm nền mờ để đóng.
+ * - Mở: hiện ngay (để focus được mục đầu), mờ dần và trượt xuống 8px trong 200ms; đóng: mờ dần rồi mới ẩn.
+ *   Tắt hiệu ứng khi người dùng chọn giảm chuyển động. Mỗi hàng cao 50px kể cả đường kẻ dưới.
+ * - Đóng sẵn bằng thuộc tính `inert` (không focus/đọc được); script bỏ `inert` và thêm `data-open` khi mở.
+ * - 求人検索 / エントリー chỉ hiện ở SP (header SP không có chỗ), đặt sau 社内スポット求人 vì cùng nhóm tuyển dụng.
+ */
+import { legalLinks, menuItems } from '../data/site-links';
+
+interface Props {
+  id: string;
+}
+
+const { id } = Astro.props;
+---
+
+<div
+  id={id}
+  class="group/menu invisible fixed inset-x-0 bottom-0 top-0 z-30 opacity-0 [transition:opacity_200ms,visibility_0s_200ms] data-[open]:(visible opacity-100 [transition:opacity_200ms]) motion-reduce:transition-none"
+  inert
+  data-site-menu
+>
+  <div class="absolute inset-0 bg-black/30 lt-pc:hidden" data-site-menu-close></div>
+  <nav
+    aria-label="メニュー"
+    class="relative ml-auto h-full -translate-y-8px overflow-y-auto overscroll-contain bg-white transition-transform duration-200 group-data-[open]/menu:translate-y-0 motion-reduce:transition-none pc:(w-390px shadow-menu)"
+  >
+    <ul class="pt-11px">
+      {menuItems.map((item) => (
+        <li class:list={['border-b border-line-hair', item.spOnly && 'pc:hidden']}>
+          <a
+            href={item.href}
+            class="flex h-49px items-center gap-13px pl-19px pr-15px text-menu font-semibold transition-colors duration-150 hov:bg-surface-title focus-visible:(outline-2 outline-offset-[-2px] outline-secondary)"
+          >
+            <span class="flex w-27px shrink-0 justify-center">
+              <img src={item.icon.src} alt="" width={item.icon.width} height={item.icon.height} />
+            </span>
+            <span class="flex-1">{item.label}</span>
+            <img src="/assets/img/icon/icon-chevron-right.svg" alt="" width="7" height="12" />
+          </a>
+        </li>
+      ))}
+    </ul>
+    <ul class="pb-20px pt-15px">
+      {legalLinks.map(({ label, href }) => (
+        <li>
+          <a
+            href={href}
+            class="flex h-35px w-fit items-center px-18px text-menu-sub transition-colors duration-150 hov:underline focusable"
+          >
+            {label}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </nav>
+</div>
