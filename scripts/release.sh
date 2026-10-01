@@ -1,16 +1,17 @@
 #!/usr/bin/env bash
-# Build dist/ rồi đồng bộ sang repo output (nhánh develop của sunnylife-spot_html).
-# Không commit và không push: người chạy tự xem diff rồi commit.
+# Build dist/ rồi đồng bộ sang repo output (sunnylife-spot_html) trên nhánh feature trùng tên nhánh builder.
+# Không commit, không push, không merge: người chạy tự xem diff, commit rồi mở PR (base develop) cho BE review.
 #
 # Biến môi trường:
-#   RELEASE_TARGET  thư mục repo output   (mặc định ../html)
-#   RELEASE_BRANCH  nhánh bắt buộc đang checkout ở repo output (mặc định develop)
+#   RELEASE_TARGET  thư mục repo output (mặc định ../html)
+#   RELEASE_BASE    nhánh gốc để tạo nhánh mới ở repo output (mặc định origin/develop).
+#                   Đặt thành nhánh feature khác (ví dụ origin/feat/xxx) khi PR trước chưa merge (PR xếp chồng).
 set -euo pipefail
 
 cd "$(dirname "$0")/.."
 
 TARGET="${RELEASE_TARGET:-../html}"
-EXPECTED_BRANCH="${RELEASE_BRANCH:-develop}"
+BASE="${RELEASE_BASE:-origin/develop}"
 
 # rsync --delete xoá mọi thứ không có trong dist/, nên phải chắc đúng thư mục đích.
 if [ ! -d "$TARGET/.git" ]; then
@@ -18,10 +19,28 @@ if [ ! -d "$TARGET/.git" ]; then
   exit 1
 fi
 
-current_branch="$(git -C "$TARGET" rev-parse --abbrev-ref HEAD)"
-if [ "$current_branch" != "$EXPECTED_BRANCH" ]; then
-  echo "ERROR: '$TARGET' đang ở nhánh '$current_branch', cần '$EXPECTED_BRANCH'." >&2
+branch="$(git rev-parse --abbrev-ref HEAD)"
+case "$branch" in
+  main | develop | HEAD)
+    echo "ERROR: builder đang ở '$branch'. Chuyển sang nhánh feature (ví dụ feat/ten-man) rồi chạy lại." >&2
+    exit 1
+    ;;
+esac
+
+if [ -n "$(git -C "$TARGET" status --porcelain)" ]; then
+  echo "ERROR: '$TARGET' còn thay đổi chưa commit. Commit hoặc dọn trước khi release." >&2
   exit 1
+fi
+
+echo "==> Chuẩn bị nhánh '$branch' ở $TARGET"
+git -C "$TARGET" fetch --quiet origin
+if git -C "$TARGET" show-ref --verify --quiet "refs/heads/$branch" ||
+  git -C "$TARGET" show-ref --verify --quiet "refs/remotes/origin/$branch"; then
+  # Nhánh đã có (lần release trước): chuyển sang, giữ lịch sử commit cũ.
+  git -C "$TARGET" switch --quiet "$branch"
+else
+  git -C "$TARGET" switch --quiet --no-track -c "$branch" "$BASE"
+  echo "    tạo mới từ $BASE"
 fi
 
 echo "==> Kiểm tra kiểu (astro check)"
@@ -44,8 +63,11 @@ fi
 echo "==> Đồng bộ dist/ -> $TARGET (giữ nguyên .git)"
 rsync -a --delete --exclude '.git' --exclude '.DS_Store' dist/ "$TARGET/"
 
-echo "==> Thay đổi ở $TARGET:"
+echo "==> Thay đổi ở $TARGET (nhánh $branch):"
 git -C "$TARGET" status --short
 if [ -z "$(git -C "$TARGET" status --porcelain)" ]; then
   echo "(không có thay đổi, không cần commit)"
+else
+  echo "Tiếp theo: commit 'build: ... (builder@$(git rev-parse --short HEAD))', push nhánh, mở PR base ${BASE#origin/} (nếu nhánh mới tạo lần này)."
+  echo "Không tự merge PR bên html: BE review rồi merge."
 fi

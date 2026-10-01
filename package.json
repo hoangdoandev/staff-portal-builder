@@ -9,7 +9,7 @@
   },
   "scripts": {
     "dev": "concurrently --kill-others-on-fail -n ts,astro \"pnpm scripts:watch\" \"astro dev\"",
-    "build": "pnpm clean:assets && pnpm scripts:build && astro build && node scripts/split-fonts-css.mjs && pnpm format:dist",
+    "build": "pnpm clean:assets && pnpm scripts:build && astro build && node scripts/split-fonts-css.mjs && node scripts/relativize-urls.mjs && pnpm format:dist",
     "clean:assets": "rm -rf public/assets/js public/assets/fonts",
     "scripts:build": "tsc -p tsconfig.scripts.json",
     "scripts:watch": "tsc -p tsconfig.scripts.json --watch --preserveWatchOutput",
