@@ -130,6 +130,7 @@ BE copy output một lần, sau đó theo dõi diff của repo output và tự s
 - **Không dùng `<style>` trong `.astro`**: Astro thêm `data-astro-cid-*` và class có hash vào HTML.
 - Thư viện bên thứ ba (jQuery, Swiper, ...) nạp qua CDN hoặc copy nguyên vào `public/assets/js/vendor/`, không bundle.
 - `public/assets/js/` và `public/assets/fonts/` là file sinh ra, đã `.gitignore`.
+  `src/scripts/scripts-dir-placeholder.d.ts` giữ cho `tsc` luôn có đầu vào (không có file nào thì `tsc` báo TS18003), không sinh ra JS.
 - URL nội bộ trong source viết từ gốc (`/assets/...`, `/evaluation/self.html`, `/`). Sau build, `scripts/relativize-urls.mjs`
   đổi hết sang đường dẫn tương đối theo vị trí từng file (`../assets/...`, `/` thành `index.html`), cả `url()` trong CSS,
   nên mở thẳng file HTML trong `../html` bằng trình duyệt vẫn đúng. `pnpm preview` vẫn dùng được.
@@ -162,5 +163,3 @@ BE copy output một lần, sau đó theo dõi diff của repo output và tự s
 - [x] Deterministic: build hai lần, `diff -r` giữa hai `dist/` rỗng.
 - [x] Release an toàn: đồng bộ giữ nguyên repo đích, chạy lần hai không có thay đổi, từ chối thư mục sai.
 - [x] Hai repo: danh tính commit cấp repo (`Hoang Doan <dev.hoangdoan@gmail.com>`), remote qua alias `github-devhoangdoan`.
-
-Trang `auth/login` hiện chỉ là trang thử để kiểm chứng pipeline, sẽ thay bằng trang thật khi cắt giao diện.
