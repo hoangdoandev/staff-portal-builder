@@ -51,7 +51,7 @@ export const shortcuts = {
     'w-0 min-w-0 flex-1 bg-transparent text-center text-body text-ink outline-none [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none',
   // Checkbox 18px: chưa chọn viền xám, đã chọn nền xanh có dấu tick trắng.
   checkbox: `size-18px shrink-0 cursor-pointer appearance-none rounded-check border border-line bg-white bg-center bg-no-repeat transition-colors duration-150 checked:(border-secondary bg-secondary bg-[url(/assets/img/icon/icon-check.svg)]) ${focusRing}`,
-  // Ô nhập, textarea. Lỗi: đặt aria-invalid="true" hoặc class is-error trên phần tử.
+  // Ô nhập, textarea (không có nút kéo giãn, như thiết kế). Lỗi: đặt aria-invalid="true" hoặc class is-error trên phần tử.
   field:
-    'w-full rounded-base border border-line-soft bg-surface-field px-14px py-14px text-body leading-copy text-ink placeholder:text-ink-mute transition-colors duration-150 focus:(border-primary outline-none ring-2 ring-primary/20) aria-[invalid=true]:(border-danger-sub bg-danger-tint) [&.is-error]:(border-danger-sub bg-danger-tint)',
+    'w-full resize-none rounded-base border border-line-soft bg-surface-field px-14px py-14px text-body leading-copy text-ink placeholder:text-ink-mute transition-colors duration-150 focus:(border-primary outline-none ring-2 ring-primary/20) aria-[invalid=true]:(border-danger-sub bg-danger-tint) [&.is-error]:(border-danger-sub bg-danger-tint)',
 };
