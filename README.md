@@ -134,6 +134,8 @@ BE copy output một lần, sau đó theo dõi diff của repo output và tự s
 - URL nội bộ trong source viết từ gốc (`/assets/...`, `/evaluation/self.html`, `/`). Sau build, `scripts/relativize-urls.mjs`
   đổi hết sang đường dẫn tương đối theo vị trí từng file (`../assets/...`, `/` thành `index.html`), cả `url()` trong CSS,
   nên mở thẳng file HTML trong `../html` bằng trình duyệt vẫn đúng. `pnpm preview` vẫn dùng được.
+- **Danh sách màn** `screens.html` (画面一覧): bấm để mở từng màn, kèm link Figma PC/SP. Dữ liệu ở `src/data/screens.ts`;
+  build dừng nếu danh sách lệch với các trang trong `src/pages/`, nên mỗi trang mới phải được khai báo ở đó.
 - Trang đặt trong `src/pages/` theo nhóm chức năng, `build.format: 'file'` nên `auth/login.astro` ra `auth/login.html`.
   Nhóm thư mục sẽ chốt khi cắt trang thật.
 

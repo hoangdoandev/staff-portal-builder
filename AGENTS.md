@@ -11,7 +11,8 @@ File này dành cho dev và AI agent (Claude Code đọc qua `CLAUDE.md`). Chi t
 
 ## Quy trình mỗi màn / feature
 
-1. Ở builder, tạo nhánh từ `main` (`feat/...`, `fix/...`), cắt màn, commit.
+1. Ở builder, tạo nhánh từ `main` (`feat/...`, `fix/...`), cắt màn, **thêm màn vào `src/data/screens.ts`**
+   (trang `screens.html` liệt kê mọi màn; build báo lỗi nếu có trang chưa khai báo), commit.
 2. `pnpm release`: chuyển `../html` sang nhánh **cùng tên**, build hai lần so sánh, đồng bộ `dist/`. Script không commit.
 3. Ở html: xem diff, commit `build: <mô tả> (builder@<sha>)`, push nhánh, mở PR **base `develop`**.
 4. Ở builder: mở PR base `main`, merge.
