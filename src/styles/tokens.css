@@ -84,6 +84,9 @@
   --font-size-micro: 10px; /* số trong huy hiệu */
   --font-size-figure: 12px; /* số phần trăm tiến độ */
   --font-size-figure-unit: 10px; /* ký hiệu % đi kèm */
+  --font-size-step: 12px; /* số trong vòng tròn đánh số tiêu chí, PC cũng 12px */
+  --font-size-rating: 14px; /* chữ S〜D trong ô chọn mức đánh giá, PC cũng 14px */
+  --font-size-bar-label: 11px; /* dòng nhỏ trên thanh hành động dính đáy ("自己評価 3/11項目") */
 }
 
 /* Cỡ chữ: PC (từ 768px, khớp breakpoint `pc` trong uno/tokens.ts) */
@@ -102,5 +105,6 @@
     --font-size-micro: 11px;
     --font-size-figure: 14px;
     --font-size-figure-unit: 12px;
+    --font-size-bar-label: 14px;
   }
 }

@@ -1,0 +1,127 @@
+---
+/**
+ * Thẻ một tiêu chí đánh giá trong màn nhập (Figma 自分の評価入力画面 PC 606:4796, SP 606:3964).
+ * Gồm: số thứ tự + tên tiêu chí + nhãn trạng thái, mô tả, ô chọn mức S〜D (radio), giải thích mức đang chọn,
+ * danh sách tiêu chuẩn S〜D mở/đóng bằng <details> (không cần JS), ô コメント có đếm ký tự (script char-counter.js).
+ *
+ * Chọn mức khác trên trình duyệt chỉ đổi ô được tô màu; khung giải thích do server render theo mức đã lưu.
+ */
+export type Grade = 'S' | 'A' | 'B' | 'C' | 'D';
+
+interface Props {
+  /** Số thứ tự hiển thị trong vòng tròn, đồng thời dùng làm hậu tố cho name/id của các ô nhập. */
+  number: number;
+  title: string;
+  description: string;
+  status: 'done' | 'empty';
+  statusLabel: string;
+  /** Giải thích từng mức S〜D. */
+  criteria: Record<Grade, string>;
+  selected?: Grade | undefined;
+  /** Danh sách tiêu chuẩn đang mở. */
+  criteriaOpen?: boolean | undefined;
+  comment?: string | undefined;
+  ratingLabel?: string | undefined;
+  commentLabel?: string | undefined;
+  commentMaxLength?: number | undefined;
+}
+
+const {
+  number,
+  title,
+  description,
+  status,
+  statusLabel,
+  criteria,
+  selected,
+  criteriaOpen = false,
+  comment = '',
+  ratingLabel = '自己評価の段階',
+  commentLabel = 'コメント（根拠となった具体的な事実）',
+  commentMaxLength = 500,
+} = Astro.props;
+
+const grades: Grade[] = ['S', 'A', 'B', 'C', 'D'];
+
+/** Màu chữ và nền của nhãn trạng thái. */
+const statusClass = {
+  done: 'bg-success-tint text-success',
+  empty: 'bg-danger-tint text-danger-sub',
+} as const;
+
+const commentId = `comment-${number}`;
+const counterId = `comment-${number}-count`;
+---
+
+<li class="rounded-base border border-line bg-white p-14px pc:p-19px">
+  <div class="flex items-center gap-7px">
+    <span class="step-number" aria-hidden="true">
+      {number}
+    </span>
+    <h3 class="text-title-card font-semibold">{title}</h3>
+    <span class:list={['chip ml-auto self-start', statusClass[status]]}>{statusLabel}</span>
+  </div>
+  <p class="mt-10px text-body leading-copy">{description}</p>
+
+  <fieldset class="mt-20px">
+    <legend class="text-caption leading-copy">{ratingLabel}</legend>
+    <div class="mt-5px grid grid-cols-5 gap-6px pc:gap-5px">
+      {grades.map((grade) => (
+        <label>
+          <input
+            type="radio"
+            name={`rating-${number}`}
+            value={grade}
+            checked={grade === selected}
+            class="peer sr-only"
+          />
+          <span class="rating-option">{grade}</span>
+        </label>
+      ))}
+    </div>
+  </fieldset>
+
+  {selected && (
+    <div class="mt-10px flex gap-9px rounded-base bg-primary-tint px-15px py-10px pc:pb-14px">
+      <span class="text-rating font-semibold leading-copy">{selected}</span>
+      <p class="text-body leading-copy">{criteria[selected]}</p>
+    </div>
+  )}
+
+  <details class="group mt-5px" open={criteriaOpen}>
+    <summary class="summary-plain link w-fit text-body-sm leading-copy">
+      <span class="group-open:hidden">S〜Dの判定基準を見る</span>
+      <span class="hidden group-open:inline">基準を閉じる</span>
+    </summary>
+    <dl class="mt-5px flex flex-col gap-5px">
+      {grades.map((grade) => (
+        <div class="flex rounded-base bg-info-tint px-14px py-10px pc:py-9px">
+          <dt class="w-21px shrink-0 text-body font-semibold leading-copy text-info-key">
+            {grade}
+          </dt>
+          <dd class="text-body-sm leading-copy text-info">{criteria[grade]}</dd>
+        </div>
+      ))}
+    </dl>
+  </details>
+
+  <div class="mt-22px pc:mt-20px">
+    <div class="flex items-center justify-between gap-10px">
+      <label for={commentId} class="text-caption leading-copy">
+        {commentLabel}
+      </label>
+      <span id={counterId} class="text-caption text-ink-sub">
+        {comment.length}/{commentMaxLength}
+      </span>
+    </div>
+    <textarea
+      id={commentId}
+      name={commentId}
+      maxlength={commentMaxLength}
+      rows="2"
+      placeholder="例）9月の◯◯で、△△を自ら段取りして完了させた"
+      data-char-count={counterId}
+      class="field mt-5px block h-74px resize-y pc:mt-4px"
+    >{comment}</textarea>
+  </div>
+</li>

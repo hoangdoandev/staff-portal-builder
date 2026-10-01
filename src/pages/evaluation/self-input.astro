@@ -1,0 +1,154 @@
+---
+/**
+ * 自分の評価入力画面 (Figma PC 606:4796, SP 606:3964): nhập tự đánh giá cho một kỳ.
+ * Tiêu chí chia theo nhóm (基本介護技術, 行動...), mỗi nhóm có 配点. PC: thẻ xếp 2 cột trong vùng 1000px; SP: 1 cột.
+ * Thanh 保存 / 提出する luôn cố định ở đáy màn hình (FixedActionBar); hai nút gửi form qua thuộc tính form="...".
+ * Dữ liệu dưới đây là nội dung mẫu theo thiết kế, BE thay bằng dữ liệu thật.
+ */
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import EvaluationCriterionCard, {
+  type Grade,
+} from '../../components/EvaluationCriterionCard.astro';
+import FixedActionBar from '../../components/FixedActionBar.astro';
+import PageTitle from '../../components/PageTitle.astro';
+import PageLayout from '../../layouts/PageLayout.astro';
+
+interface Criterion {
+  number: number;
+  title: string;
+  description: string;
+  status: 'done' | 'empty';
+  statusLabel: string;
+  criteria: Record<Grade, string>;
+  selected?: Grade;
+  criteriaOpen?: boolean;
+  comment?: string;
+}
+
+interface CriterionGroup {
+  title: string;
+  weight: string;
+  items: Criterion[];
+}
+
+/** Tiêu chuẩn S〜D mẫu (Figma chỉ hiện danh sách này ở tiêu chí 3). */
+const sampleCriteria: Record<Grade, string> = {
+  S: '軽微な変化を統合し重篤化を未然に防ぐ',
+  A: '日常的な健康管理・観察を独力でこなし、相談すべき状態変化を早い段階で見分けられている',
+  B: '日常的な場面では独力で健康管理・観察を行い、判断を要する場合は上席者に相談できる',
+  C: '日常の健康管理・観察は行えるが、相談すべき状態変化の見極めに再確認が必要な場面がある',
+  D: '観察・アセスメントに漏れがあり体調悪化リスク',
+};
+
+const groups: CriterionGroup[] = [
+  {
+    title: '基本介護技術',
+    weight: '配点 20%（3項目 各6.7%）',
+    items: [
+      {
+        number: 1,
+        title: '基本介護技術',
+        description: '排泄・食事・入浴・移動移乗・口腔ケアを安全・的確に実施',
+        status: 'done',
+        statusLabel: '入力済み',
+        criteria: {
+          ...sampleCriteria,
+          A: '排泄や入浴などの身体介助を独力で安全に行い、利用者の体格や当日の状態に合わせて介助の仕方を調整している',
+        },
+        selected: 'A',
+        comment: '例）9月の◯◯で、△△を自ら段取りして完了させた',
+      },
+      {
+        number: 2,
+        title: '観察・記録・状態把握',
+        description: '状態変化の早期発見・記録・多職種共有',
+        status: 'empty',
+        statusLabel: '未入力',
+        criteria: sampleCriteria,
+      },
+    ],
+  },
+  {
+    title: '行動',
+    weight: '配点 35%（3項目 各11.7%）',
+    items: [
+      {
+        number: 3,
+        title: '規律性・基本姿勢',
+        description: '勤怠・身だしなみ・言葉遣い等、職員としての規律を保つ',
+        status: 'empty',
+        statusLabel: '未入力',
+        criteria: sampleCriteria,
+        criteriaOpen: true,
+      },
+    ],
+  },
+];
+
+const formId = 'self-evaluation-form';
+---
+
+<PageLayout title="自己評価入力｜人事評価">
+  <Breadcrumb
+    items={[
+      { label: 'HOME', href: '/' },
+      { label: '人事評価', href: '/evaluation/self.html' },
+      { label: '2026年度 上期 自己評価' },
+    ]}
+  />
+  <PageTitle title="2026年度 上期 自己評価" backHref="/evaluation/self.html" />
+
+  <form
+    id={formId}
+    action="#"
+    method="post"
+    class="mx-10px mb-30px mt-30px pc:(mx-auto mb-70px mt-24px w-1000px)"
+  >
+    <div class="pc:(flex items-center gap-9px px-2px)">
+      <p class="tag">対象期間</p>
+      <div class="mt-6px flex items-end justify-between gap-10px pc:(mt-0 justify-start gap-20px)">
+        <p class="text-title-period font-semibold">2026年度 上期</p>
+        <p class="text-caption text-ink-sub">2026年4月1日〜9月30日</p>
+      </div>
+    </div>
+
+    {groups.map((group, index) => (
+      <section class:list={[index === 0 ? 'mt-20px pc:mt-48px' : 'mt-34px pc:mt-50px']}>
+        <div class="flex items-center justify-between gap-10px px-2px pc:(justify-start gap-15px)">
+          <h2 class="text-title-section font-semibold">{group.title}</h2>
+          <p class="pill">{group.weight}</p>
+        </div>
+        <ul class="mt-8px grid gap-16px pc:(mt-11px grid-cols-2 gap-20px)">
+          {group.items.map((item) => (
+            <EvaluationCriterionCard {...item} />
+          ))}
+        </ul>
+      </section>
+    ))}
+  </form>
+  <script is:inline defer src="/assets/js/char-counter.js"></script>
+  <FixedActionBar slot="bottom-bar">
+    <p class="text-bar-label leading-copy text-ink-sub">自己評価 3/11項目</p>
+    <p class="text-total font-semibold leading-copy">総合 19点・D</p>
+    <Fragment slot="actions">
+      <button
+        type="submit"
+        form={formId}
+        name="action"
+        value="save"
+        class="btn-outline w-72px pc:w-73px"
+      >
+        保存
+      </button>
+      <button
+        type="submit"
+        form={formId}
+        name="action"
+        value="submit"
+        class="btn-primary w-150px pc:w-380px"
+      >
+        提出する
+      </button>
+    </Fragment>
+  </FixedActionBar>
+</PageLayout>

@@ -23,8 +23,18 @@ export const shortcuts = {
     'inline-flex size-16px items-center justify-center rounded-full bg-badge text-micro font-semibold text-white pc:size-18px',
   // Nhãn trạng thái nhỏ bo 4px (ví dụ "自己評価入力済"); màu chữ và nền đặt kèm theo trạng thái. Cao 20px ở SP, 21px ở PC.
   chip: 'inline-flex h-20px items-center whitespace-nowrap rounded-base px-8px text-caption-sm font-semibold pc:h-21px',
+  // Viên xám bo tròn (ví dụ "配点 20%（3項目 各6.7%）"): 12px ở SP, 13px ở PC.
+  pill: 'inline-flex items-center rounded-pill bg-surface-pill px-8px py-2px text-caption',
+  // Vòng tròn cam 24px đánh số tiêu chí.
+  'step-number':
+    'flex size-24px shrink-0 items-center justify-center rounded-full bg-primary text-step font-semibold text-white',
+  // Ô chọn mức S〜D: đặt trên <span> ngay sau <input type="radio" class="peer sr-only">. Ô đang chọn nền cam chữ trắng.
+  'rating-option': `flex h-53px cursor-pointer items-center justify-center rounded-base border border-line bg-white text-rating font-bold text-ink-sub transition-colors duration-150 hov:border-primary peer-checked:(border-primary bg-primary text-white) peer-focus-visible:(outline-2 outline-offset-2 outline-secondary)`,
+  // <summary> của <details> không có mũi tên mặc định (list-none cho Chrome/Firefox, ::-webkit-details-marker cho Safari).
+  // Viết ở đây vì class có "&" đặt trực tiếp trong .astro không được UnoCSS trích ra (bị mã hoá thành &amp;).
+  'summary-plain': 'cursor-pointer list-none [&::-webkit-details-marker]:hidden',
   // Gốc chung của nút: cao 44px ở SP, 50px ở PC.
-  btn: `inline-flex items-center justify-center rounded-base px-24px h-44px pc:h-50px text-title-card transition-colors duration-150 ${focusRing}`,
+  btn: `inline-flex items-center justify-center rounded-base px-16px h-44px pc:h-50px text-title-card transition-colors duration-150 ${focusRing}`,
   // Nút chính: nền cam.
   'btn-primary':
     'btn bg-primary font-semibold text-white hov:bg-primary-hover active:bg-primary-active disabled:(bg-disabled cursor-not-allowed)',
@@ -35,5 +45,5 @@ export const shortcuts = {
   link: `text-secondary transition-colors duration-150 hov:(text-secondary-hover underline) ${focusRing}`,
   // Ô nhập, textarea. Lỗi: đặt aria-invalid="true" hoặc class is-error trên phần tử.
   field:
-    'w-full rounded-base border border-line-soft bg-surface-field px-12px py-8px text-body leading-copy text-ink placeholder:text-ink-mute transition-colors duration-150 focus:(border-primary outline-none ring-2 ring-primary/20) aria-[invalid=true]:(border-danger-sub bg-danger-tint) [&.is-error]:(border-danger-sub bg-danger-tint)',
+    'w-full rounded-base border border-line-soft bg-surface-field px-14px py-14px text-body leading-copy text-ink placeholder:text-ink-mute transition-colors duration-150 focus:(border-primary outline-none ring-2 ring-primary/20) aria-[invalid=true]:(border-danger-sub bg-danger-tint) [&.is-error]:(border-danger-sub bg-danger-tint)',
 };
