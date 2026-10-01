@@ -3,6 +3,7 @@
  * Ô nhập số có nút − / + hai bên (Figma 一次評価入力画面: 加点). Cao 38px ở SP, 40px ở PC; mỗi nút rộng 38px kể cả viền.
  * Bấm nút tăng/giảm 1 trong khoảng min〜max (script number-stepper.js); vẫn gõ số trực tiếp được.
  * Nhãn đặt bên ngoài bằng <label for={id}>.
+ * Khung `overflow-hidden` để nền hover của nút không đè lên góc bo; vì vậy viền focus của nút vẽ vào trong.
  */
 interface Props {
   id: string;
@@ -17,12 +18,15 @@ const { id, name, value, min, max, class: className } = Astro.props;
 ---
 
 <div
-  class:list={['flex h-38px rounded-base border border-line bg-white pc:h-40px', className]}
+  class:list={[
+    'flex h-38px overflow-hidden rounded-base border border-line bg-white pc:h-40px',
+    className,
+  ]}
   data-stepper
 >
   <button
     type="button"
-    class="flex w-37px shrink-0 items-center justify-center border-r border-line transition-colors duration-150 hov:bg-surface-field focusable"
+    class="flex w-37px shrink-0 items-center justify-center border-r border-line transition-colors duration-150 hov:bg-surface-field focus-visible:(outline-2 outline-offset-[-2px] outline-secondary)"
     aria-label="1減らす"
     aria-controls={id}
     data-stepper-step="-1"
@@ -40,7 +44,7 @@ const { id, name, value, min, max, class: className } = Astro.props;
   />
   <button
     type="button"
-    class="flex w-37px shrink-0 items-center justify-center border-l border-line transition-colors duration-150 hov:bg-surface-field focusable"
+    class="flex w-37px shrink-0 items-center justify-center border-l border-line transition-colors duration-150 hov:bg-surface-field focus-visible:(outline-2 outline-offset-[-2px] outline-secondary)"
     aria-label="1増やす"
     aria-controls={id}
     data-stepper-step="1"
