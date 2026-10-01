@@ -1,0 +1,87 @@
+---
+/**
+ * 画面一覧: danh sách các màn đã cắt, bấm vào để mở. Trang nội bộ (không có trong Figma), tự thiết kế bằng token sẵn có.
+ * Dữ liệu ở src/data/screens.ts. Build dừng nếu danh sách lệch với các trang trong src/pages/
+ * (thiếu trang chưa khai báo, hoặc khai báo đường dẫn không tồn tại).
+ */
+import { figmaUrl, screenGroups } from '../data/screens';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const selfPath = '/screens.html';
+const pageRoutes = Object.keys(import.meta.glob('./**/*.astro'))
+  .map((file) => file.replace(/^\./, '').replace(/\.astro$/, '.html'))
+  .filter((route) => route !== selfPath);
+const listedPaths = screenGroups.flatMap((group) => group.screens.map((screen) => screen.path));
+
+const missing = pageRoutes.filter((route) => !listedPaths.includes(route));
+const unknown = listedPaths.filter((path) => !pageRoutes.includes(path));
+if (missing.length > 0 || unknown.length > 0) {
+  throw new Error(
+    [
+      'src/data/screens.ts lệch với src/pages/.',
+      missing.length > 0 ? `Chưa khai báo: ${missing.join(', ')}` : '',
+      unknown.length > 0 ? `Không có trang: ${unknown.join(', ')}` : '',
+    ]
+      .filter(Boolean)
+      .join(' '),
+  );
+}
+
+const total = listedPaths.length;
+---
+
+<BaseLayout title="画面一覧｜STAFFポータル" description="Danh sách các màn đã cắt">
+  <main class="flex-1 bg-surface-title px-16px py-24px pc:py-40px">
+    <div class="mx-auto max-w-880px">
+      <h1 class="text-title-period font-semibold">画面一覧</h1>
+      <p class="mt-4px text-caption text-ink-sub">Kawashima HR - Staff Portal・{total}画面</p>
+
+      {screenGroups.map((group) => (
+        <section class="mt-24px">
+          <h2 class="flex items-center gap-8px text-title-section font-semibold">
+            {group.title}
+            <span class="pill">{group.screens.length}</span>
+          </h2>
+          <ul class="mt-8px divide-y divide-line-hair rounded-base border border-line bg-white">
+            {group.screens.map((screen) => (
+              <li class="relative flex flex-col gap-8px px-16px py-14px transition-colors duration-150 hov:bg-primary-tint pc:(flex-row items-center gap-16px)">
+                <div class="min-w-0 flex-1">
+                  <a
+                    href={screen.path}
+                    class="text-body font-semibold after:(absolute inset-0 content-empty) focusable"
+                  >
+                    {screen.title}
+                  </a>
+                  <p class="mt-2px break-all font-mono text-caption-sm text-ink-mute">
+                    {screen.path.slice(1)}
+                  </p>
+                  {screen.note && <p class="mt-4px text-caption text-ink-sub">{screen.note}</p>}
+                </div>
+                {screen.figma && (
+                  <p class="relative flex shrink-0 gap-12px text-caption">
+                    <a
+                      href={figmaUrl(screen.figma.pc)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="link"
+                    >
+                      Figma PC
+                    </a>
+                    <a
+                      href={figmaUrl(screen.figma.sp)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="link"
+                    >
+                      Figma SP
+                    </a>
+                  </p>
+                )}
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))}
+    </div>
+  </main>
+</BaseLayout>
