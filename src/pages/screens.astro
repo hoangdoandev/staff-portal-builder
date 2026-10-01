@@ -1,6 +1,6 @@
 ---
 /**
- * 画面一覧: danh sách các màn đã cắt, bấm vào để mở. Trang nội bộ (không có trong Figma), tự thiết kế bằng token sẵn có.
+ * 画面一覧: danh sách các màn đã cắt; link ページを開く mở màn ở tab mới, kèm link Figma PC/SP. Trang nội bộ (không có trong Figma), tự thiết kế bằng token sẵn có.
  * Dữ liệu ở src/data/screens.ts. Build dừng nếu danh sách lệch với các trang trong src/pages/
  * (thiếu trang chưa khai báo, hoặc khai báo đường dẫn không tồn tại).
  */
@@ -44,39 +44,39 @@ const total = listedPaths.length;
           </h2>
           <ul class="mt-8px divide-y divide-line-hair rounded-base border border-line bg-white">
             {group.screens.map((screen) => (
-              <li class="relative flex flex-col gap-8px px-16px py-14px transition-colors duration-150 hov:bg-primary-tint pc:(flex-row items-center gap-16px)">
+              <li class="flex flex-col gap-8px px-16px py-14px pc:(flex-row items-center gap-16px)">
                 <div class="min-w-0 flex-1">
-                  <a
-                    href={screen.path}
-                    class="text-body font-semibold after:(absolute inset-0 content-empty) focusable"
-                  >
-                    {screen.title}
-                  </a>
+                  <p class="text-body font-semibold">{screen.title}</p>
                   <p class="mt-2px break-all font-mono text-caption-sm text-ink-mute">
                     {screen.path.slice(1)}
                   </p>
                   {screen.note && <p class="mt-4px text-caption text-ink-sub">{screen.note}</p>}
                 </div>
-                {screen.figma && (
-                  <p class="relative flex shrink-0 gap-12px text-caption">
-                    <a
-                      href={figmaUrl(screen.figma.pc)}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      class="link"
-                    >
-                      Figma PC
-                    </a>
-                    <a
-                      href={figmaUrl(screen.figma.sp)}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      class="link"
-                    >
-                      Figma SP
-                    </a>
-                  </p>
-                )}
+                <p class="flex shrink-0 gap-12px text-caption">
+                  <a href={screen.path} target="_blank" rel="noopener" class="link font-semibold">
+                    ページを開く
+                  </a>
+                  {screen.figma && (
+                    <Fragment>
+                      <a
+                        href={figmaUrl(screen.figma.pc)}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="link"
+                      >
+                        Figma PC
+                      </a>
+                      <a
+                        href={figmaUrl(screen.figma.sp)}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="link"
+                      >
+                        Figma SP
+                      </a>
+                    </Fragment>
+                  )}
+                </p>
               </li>
             ))}
           </ul>
