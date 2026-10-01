@@ -33,6 +33,10 @@ export const shortcuts = {
   // <summary> của <details> không có mũi tên mặc định (list-none cho Chrome/Firefox, ::-webkit-details-marker cho Safari).
   // Viết ở đây vì class có "&" đặt trực tiếp trong .astro không được UnoCSS trích ra (bị mã hoá thành &amp;).
   'summary-plain': 'cursor-pointer list-none [&::-webkit-details-marker]:hidden',
+  // Lề vùng nội dung của màn nhập: SP cách mép 10px; PC rộng 1000px ở giữa (Figma 1366px: lề 183px), màn hẹp hơn 1040px
+  // thì co lại, luôn cách mép ít nhất 20px. Lề tự tính thay cho w-1000px + mx-auto: ở 1366px kết quả y hệt, từ 768 đến
+  // 1039px không bị tràn ngang. Lề SP nằm luôn trong shortcut vì utility mx-* đặt riêng sẽ đè lề PC (utility sinh sau shortcut).
+  'content-1000': 'mx-10px pc:mx-[max(20px,calc((100%_-_1000px)/2))]',
   // Gốc chung của nút: cao 44px ở SP, 50px ở PC.
   btn: `inline-flex items-center justify-center rounded-base px-16px h-44px pc:h-50px text-title-card transition-colors duration-150 ${focusRing}`,
   // Nút chính: nền cam.
