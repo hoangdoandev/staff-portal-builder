@@ -8,13 +8,9 @@
     "node": ">=24.14.0"
   },
   "scripts": {
-    "dev": "pnpm uno && concurrently --kill-others-on-fail -n uno,ts,astro \"pnpm uno:watch\" \"pnpm scripts:watch\" \"astro dev\"",
-    "build": "pnpm clean:assets && pnpm build:assets && astro build && pnpm format:dist",
-    "build:assets": "pnpm uno && pnpm scripts:build",
-    "clean:assets": "rm -rf public/assets/css public/assets/js public/assets/fonts",
-    "uno:generate": "unocss \"src/**/*.{astro,ts}\" -c uno.config.ts -o public/assets/css/style.css",
-    "uno": "pnpm uno:generate && node scripts/split-fonts-css.mjs",
-    "uno:watch": "pnpm uno:generate --watch",
+    "dev": "concurrently --kill-others-on-fail -n ts,astro \"pnpm scripts:watch\" \"astro dev\"",
+    "build": "pnpm clean:assets && pnpm scripts:build && astro build && node scripts/split-fonts-css.mjs && pnpm format:dist",
+    "clean:assets": "rm -rf public/assets/js public/assets/fonts",
     "scripts:build": "tsc -p tsconfig.scripts.json",
     "scripts:watch": "tsc -p tsconfig.scripts.json --watch --preserveWatchOutput",
     "format:dist": "prettier --ignore-path .prettierignore --write \"dist/**/*.{html,css,js}\"",
@@ -28,7 +24,6 @@
   "devDependencies": {
     "@astrojs/check": "0.9.10",
     "@types/node": "26.6.3",
-    "@unocss/cli": "66.10.5",
     "@unocss/preset-web-fonts": "66.10.5",
     "concurrently": "10.0.5",
     "prettier": "3.9.9",

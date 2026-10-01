@@ -3,7 +3,6 @@ dist/
 .astro/
 
 # Sinh ra bởi pnpm build:assets (UnoCSS CLI + tsc), không commit
-public/assets/css/
 public/assets/js/
 public/assets/fonts/
 

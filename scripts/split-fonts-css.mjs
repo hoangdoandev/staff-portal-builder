@@ -1,23 +1,19 @@
-// Tách khối "/* layer: fonts */" (hàng trăm @font-face do plugin web fonts sinh ra) khỏi
-// style.css sang fonts.css, để style.css gọn và BE đọc được.
+// Tách hàng trăm khối @font-face (do plugin web fonts sinh) khỏi dist/assets/css/style.css
+// sang dist/assets/css/fonts.css, để style.css gọn và BE đọc được. Chạy sau `astro build`.
 import { readFile, writeFile } from 'node:fs/promises';
 
-const styleCssPath = 'public/assets/css/style.css';
-const fontsCssPath = 'public/assets/css/fonts.css';
-const layerMarker = '/* layer: fonts */';
-const anyLayerMarker = '/* layer: ';
+const styleCssPath = 'dist/assets/css/style.css';
+const fontsCssPath = 'dist/assets/css/fonts.css';
+const fontFaceBlock = /@font-face\s*\{[^}]*\}\s*/g;
 
 const css = await readFile(styleCssPath, 'utf8');
+const fontFaces = css.match(fontFaceBlock) ?? [];
 
-const start = css.indexOf(layerMarker);
-if (start === -1) {
+if (fontFaces.length === 0) {
   throw new Error(
-    `Không thấy "${layerMarker}" trong ${styleCssPath}. Kiểm tra safelist font-sans trong uno.config.ts.`,
+    `Không thấy @font-face trong ${styleCssPath}. Kiểm tra class font-sans trong BaseLayout.astro.`,
   );
 }
 
-const nextLayer = css.indexOf(anyLayerMarker, start + layerMarker.length);
-const end = nextLayer === -1 ? css.length : nextLayer;
-
-await writeFile(fontsCssPath, css.slice(start, end));
-await writeFile(styleCssPath, css.slice(0, start) + css.slice(end));
+await writeFile(fontsCssPath, fontFaces.join(''));
+await writeFile(styleCssPath, css.replace(fontFaceBlock, ''));

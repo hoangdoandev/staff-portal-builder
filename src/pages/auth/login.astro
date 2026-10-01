@@ -3,15 +3,15 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 ---
 
 <BaseLayout title="ログイン">
-  <main class="mx-auto max-w-sm p-4 pc:p-10 text-ink">
-    <h1 class="mb-6 text-title-page font-semibold">ログイン</h1>
-    <form action="#" method="post" class="space-y-4">
+  <main class="mx-auto max-w-384px p-16px pc:p-40px">
+    <h1 class="mb-24px text-title-page font-semibold">ログイン</h1>
+    <form action="#" method="post" class="space-y-16px">
       <label class="block">
-        <span class="mb-1 block text-caption text-ink-sub">メールアドレス</span>
+        <span class="mb-4px block text-caption text-ink-sub">メールアドレス</span>
         <input type="email" name="email" class="field" />
       </label>
       <label class="block">
-        <span class="mb-1 block text-caption text-ink-sub">パスワード</span>
+        <span class="mb-4px block text-caption text-ink-sub">パスワード</span>
         <input
           type="password"
           name="password"
@@ -19,12 +19,14 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
           class="field"
           aria-invalid="true"
         />
-        <span class="mt-1 block text-caption-sm text-danger-sub">パスワードを入力してください</span>
+        <span class="mt-4px block text-caption-sm text-danger-sub">
+          パスワードを入力してください
+        </span>
       </label>
       <button type="button" data-password-toggle class="link text-body-sm">
         パスワードを表示
       </button>
-      <div class="flex gap-3">
+      <div class="flex gap-12px">
         <button type="button" class="btn-outline flex-1">
           保存
         </button>
@@ -36,7 +38,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
         提出する
       </button>
     </form>
-    <p class="mt-6 inline-block rounded-pill bg-surface-pill px-2 text-caption-sm leading-copy">
+    <p class="mt-24px inline-block rounded-pill bg-surface-pill px-8px text-caption-sm leading-copy">
       配点 20%
     </p>
   </main>

@@ -30,26 +30,35 @@ Hỗ trợ trình duyệt cũ hơn sẽ làm output khó đọc hơn, chỉ làm
 
 Nguồn: Figma "Kawashima HR - Staff Portal" (khung PC 1366px, SP 390px). Giữ nguyên giá trị theo thiết kế.
 
-| Nội dung                                                                     | Vị trí             |
-| ---------------------------------------------------------------------------- | ------------------ |
-| Màu, bo góc, bóng, cỡ chữ (PC và SP), breakpoint                             | `uno/tokens.ts`    |
-| Font (Hiragino Sans, dự phòng Noto Sans JP)                                  | `uno/fonts.ts`     |
-| Class ngữ nghĩa và trạng thái: `btn-primary`, `btn-outline`, `link`, `field` | `uno/shortcuts.ts` |
-| Ghép các phần trên                                                           | `uno.config.ts`    |
+| Nội dung                                                                            | Vị trí                  |
+| ----------------------------------------------------------------------------------- | ----------------------- |
+| **Giá trị** token: màu, cỡ chữ (SP và PC), bo góc, bóng, chiều cao dòng             | `src/styles/tokens.css` |
+| Tên class ứng với từng token, breakpoint                                            | `uno/tokens.ts`         |
+| Font (Hiragino Sans, dự phòng Noto Sans JP)                                         | `uno/fonts.ts`          |
+| Class ngữ nghĩa và trạng thái: `btn`, `btn-primary`, `btn-outline`, `link`, `field` | `uno/shortcuts.ts`      |
+| Biến thể `hov:` (hover chỉ trên thiết bị có chuột)                                  | `uno/variants.ts`       |
+| Ghép các phần trên                                                                  | `uno.config.ts`         |
 
+- **Đổi giá trị** (màu, cỡ chữ...): chỉ sửa `src/styles/tokens.css`. **Thêm token mới**: thêm biến vào `tokens.css`, rồi thêm
+  tên vào danh sách tương ứng trong `uno/tokens.ts`. Tên biến không được trùng biến Wind4 tự sinh (`--colors-*`, `--radius-*`,
+  `--shadow-*`, `--text-*`, `--leading-*`), nên token dùng `--color-*`, `--rounded-*`, `--box-shadow-*`, `--font-size-*`, `--line-height-*`.
+- **Chỉ có màu thiết kế:** palette mặc định của Wind4 đã bị thay hẳn, `bg-gray-300` hay `text-red-500` không sinh CSS.
+  Còn lại các màu cơ bản `white`, `black`, `transparent`, `current`, `inherit`.
+- **Kích thước viết bằng px** khớp số đo Figma: `h-44px`, `px-24px`, `gap-12px` ra `height: 44px`... (không dùng thang `h-11`).
 - **Breakpoint:** một điểm duy nhất `pc` = 768px (giả định, vì Figma chỉ có hai khung). Mobile-first: mặc định là SP,
-  tiền tố `pc:` áp dụng từ 768px (ví dụ `pc:h-12.5`). Cỡ chữ là biến CSS `--font-size-*` đổi giá trị tại 768px,
+  `pc:` áp dụng từ 768px, `lt-pc:` chỉ dưới 768px. Cỡ chữ đổi giá trị tại 768px ngay trong `tokens.css`,
   dùng qua class `text-body`, `text-title-page`...
 - **Header SP:** bỏ phần trắng phía trên khung Figma (chỗ thanh trạng thái điện thoại).
-- **Font:** `"Hiragino Sans", "Noto Sans JP", sans-serif`. Máy Apple dùng Hiragino Sans, máy khác dùng Noto Sans JP tải từ
-  Google lúc build (lần build đầu hoặc sau khi xoá cache cần có mạng), lưu ở `public/assets/fonts/`.
-  `@font-face` được tách riêng ra `assets/css/fonts.css` để `style.css` gọn. Weight: W3 = 400, W5 = 500, W6 = 600, W7 = 700.
+- **Font:** `"Hiragino Sans", "Noto Sans JP", sans-serif`, đặt sẵn trên `<body>` (`font-sans`). Máy Apple dùng Hiragino Sans,
+  máy khác dùng Noto Sans JP tải từ Google lúc build (lần build đầu hoặc sau khi xoá cache cần có mạng), lưu ở
+  `public/assets/fonts/`. `@font-face` được tách riêng ra `assets/css/fonts.css` để `style.css` gọn.
+  Weight: W3 = 400, W5 = 500, W6 = 600, W7 = 700.
 - **Trạng thái hover, active, focus, lỗi** không có trong Figma: FE tự thêm theo phong cách thiết kế (các giá trị này ghi
-  "ngoài thiết kế" trong `uno/tokens.ts`). Hover chỉ áp dụng trên thiết bị có chuột. Lỗi: đặt `aria-invalid="true"` hoặc class `is-error`.
+  "ngoài thiết kế" trong `tokens.css`). Hover viết bằng `hov:` thay cho `hover:`. Lỗi: đặt `aria-invalid="true"` hoặc class `is-error`.
 - **Độ tương phản theo thiết kế:** chữ trắng trên cam `#f57a38` khoảng 2.7:1, chữ `#f76862` trên nền trắng khoảng 3.2:1,
   thấp hơn chuẩn WCAG AA (4.5:1). Giữ nguyên theo thiết kế, nên báo designer.
-- **CSS của Wind4** viết màu dạng `color-mix(in srgb, var(--colors-primary) ...)` kèm khối `@supports` lặp lại với `oklab`.
-  Đây là cách Wind4 sinh CSS: dài nhưng đúng. Giá trị màu thật nằm ở các biến `--colors-*` trong `style.css`.
+- **CSS của Wind4** viết màu dạng `color-mix(in srgb, var(--color-primary) ...)` kèm khối `@supports` lặp lại với `oklab`.
+  Đây là cách Wind4 sinh CSS: dài nhưng đúng, giá trị thật nằm ở các biến `--color-*`.
 
 ## Ảnh và icon
 
@@ -69,13 +78,13 @@ public/assets/img/
 
 ## Lệnh
 
-| Lệnh           | Tác dụng                                                                                            |
-| -------------- | --------------------------------------------------------------------------------------------------- |
-| `pnpm install` | Cài dependency                                                                                      |
-| `pnpm dev`     | Sinh CSS một lần, rồi chạy song song UnoCSS watch, tsc watch và `astro dev` (http://localhost:4321) |
-| `pnpm check`   | `astro check` (kiểm tra kiểu cho .astro và .ts)                                                     |
-| `pnpm build`   | Sinh CSS + JS, build Astro, format `dist/` bằng Prettier                                            |
-| `pnpm release` | check, build hai lần so sánh, rồi đồng bộ `dist/` sang `../html` (không commit)                     |
+| Lệnh           | Tác dụng                                                                                                            |
+| -------------- | ------------------------------------------------------------------------------------------------------------------- |
+| `pnpm install` | Cài dependency                                                                                                      |
+| `pnpm dev`     | Chạy song song `tsc --watch` và `astro dev` (http://localhost:4321); thêm `USE_POLLING=1` nếu chạy trong Docker/WSL |
+| `pnpm check`   | `astro check` (kiểm tra kiểu cho .astro và .ts)                                                                     |
+| `pnpm build`   | Biên dịch JS, build Astro (CSS qua tích hợp UnoCSS), tách `fonts.css`, format `dist/` bằng Prettier                 |
+| `pnpm release` | check, build hai lần so sánh, rồi đồng bộ `dist/` sang `../html` (không commit)                                     |
 
 ## Quy trình bàn giao cho BE
 
@@ -88,15 +97,16 @@ BE copy output một lần, sau đó theo dõi diff của repo output và tự s
 
 ## Quy ước để output đọc được và ổn định
 
-- **CSS**: UnoCSS CLI quét `src/**/*.{astro,ts}`, ghi ra `public/assets/css/style.css` (một file, không minify).
-  Component lặp lại dùng `shortcuts` trong `uno.config.ts` (class ngữ nghĩa như `btn-primary`), layout nhỏ lẻ dùng utility.
+- **CSS**: tích hợp `unocss/astro` (docs: https://unocss.dev/integrations/astro). Vite gộp CSS của UnoCSS và `tokens.css`
+  thành một file tên cố định `assets/css/style.css` (`cssCodeSplit: false` + `assetFileNames` trong `astro.config.ts`).
+  Component lặp lại dùng `shortcuts` (class ngữ nghĩa như `btn-primary`), layout nhỏ lẻ dùng utility.
 - **Reset CSS**: `presetWind4` đã kèm reset trong `style.css`, không cần file reset riêng.
 - **JS**: viết TypeScript trong `src/scripts/`, `tsc` biên dịch ra `public/assets/js/` (ES2019, ES module, giữ comment).
   Trong trang dùng `<script is:inline type="module" src="/assets/js/...">`.
   **Không dùng `<script>` thường trong `.astro`**: Astro sẽ bundle, đổi tên có hash và minify.
 - **Không dùng `<style>` trong `.astro`**: Astro thêm `data-astro-cid-*` và class có hash vào HTML.
 - Thư viện bên thứ ba (jQuery, Swiper, ...) nạp qua CDN hoặc copy nguyên vào `public/assets/js/vendor/`, không bundle.
-- `public/assets/css/`, `public/assets/js/` và `public/assets/fonts/` là file sinh ra, đã `.gitignore`.
+- `public/assets/js/` và `public/assets/fonts/` là file sinh ra, đã `.gitignore`.
 - URL tài nguyên dùng đường dẫn tuyệt đối từ root (`/assets/...`). Xem bằng `pnpm preview`, đừng mở file HTML trực tiếp.
 - Trang đặt trong `src/pages/` theo nhóm chức năng, `build.format: 'file'` nên `auth/login.astro` ra `auth/login.html`.
   Nhóm thư mục sẽ chốt khi cắt trang thật.
@@ -110,8 +120,11 @@ BE copy output một lần, sau đó theo dõi diff của repo output và tự s
 - Astro 7 có thể chạy `astro dev` dưới nền (khi chạy bằng agent hoặc tuỳ môi trường) rồi thoát mã 0. Vì vậy `pnpm dev`
   dùng `concurrently --kill-others-on-fail`: chỉ tắt hết khi có tiến trình lỗi, không tắt khi `astro dev` thoát mã 0.
   Dừng server nền bằng `pnpm exec astro dev stop`; không tắt server dev đang chạy mà bạn không biết của ai.
-- Script `uno` (sinh một lần kèm tách `fonts.css`) khác `uno:generate` (chỉ sinh) và `uno:watch`. Đừng thêm lệnh vào
-  sau `uno` rồi truyền `--watch`: cờ sẽ rơi vào lệnh cuối chứ không phải UnoCSS.
+- Class viết trong script TS (`classList.add('...')`) chỉ sinh CSS nhờ `content` trong `uno.config.ts`: file đọc từ đĩa
+  (`filesystem`) vẫn phải khớp bộ lọc `pipeline.include`. Khi `pnpm dev` đang chạy, **file TS mới tạo** chưa được theo dõi,
+  cần khởi động lại; sửa file TS có sẵn thì CSS tự cập nhật.
+- Đường dẫn trong `uno/fonts.ts` là tuyệt đối tính từ thư mục `builder`. Đừng đổi sang tương đối: công cụ nạp cấu hình từ
+  thư mục khác (ví dụ extension UnoCSS của VS Code khi mở thư mục cha) sẽ ghi font và cache ra ngoài `builder`.
 
 ## Checklist nghiệm thu skeleton
 

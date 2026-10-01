@@ -1,5 +1,12 @@
+import { fileURLToPath } from 'node:url';
 import presetWebFonts from '@unocss/preset-web-fonts';
 import { createLocalFontProcessor } from '@unocss/preset-web-fonts/local';
+
+/**
+ * Đường dẫn tuyệt đối tính từ thư mục builder, không phụ thuộc thư mục đang chạy lệnh.
+ * (Đường dẫn tương đối từng khiến extension VS Code ghi font ra thư mục cha khi mở workspace ở đó.)
+ */
+const fromBuilderRoot = (path: string) => fileURLToPath(new URL(`../${path}`, import.meta.url));
 
 /**
  * Thiết kế dùng Hiragino Sans (W3/W5/W6/W7), font hệ thống của Apple.
@@ -19,8 +26,8 @@ export const fontsPreset = () =>
       ],
     },
     processors: createLocalFontProcessor({
-      cacheDir: 'node_modules/.cache/unocss/fonts',
-      fontAssetsDir: 'public/assets/fonts',
+      cacheDir: fromBuilderRoot('node_modules/.cache/unocss/fonts'),
+      fontAssetsDir: fromBuilderRoot('public/assets/fonts'),
       fontServeBaseUrl: '/assets/fonts',
     }),
   });
