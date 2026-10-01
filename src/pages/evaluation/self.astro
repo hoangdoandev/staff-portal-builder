@@ -52,7 +52,7 @@ const periods: EvaluationPeriod[] = [
     ]}
   />
 
-  <ul class="mx-10px mb-40px mt-30px flex flex-col gap-15px pc:(mx-auto mt-50px w-580px)">
+  <ul class="mx-10px mb-30px mt-29px flex flex-col gap-15px pc:(mx-auto mt-50px w-580px)">
     {periods.map((period) => (
       <EvaluationPeriodCard
         name={period.name}
@@ -62,7 +62,7 @@ const periods: EvaluationPeriod[] = [
         closed={period.closed}
       >
         {period.progress && (
-          <div class="pb-15px pt-15px">
+          <div class="pb-15px pt-14px">
             <dt class="tag">自己評価の進捗</dt>
             <dd class="mt-7px pc:mt-5px">
               <ProgressBar label="自己評価の進捗" percent={period.progress.percent} />
@@ -75,7 +75,7 @@ const periods: EvaluationPeriod[] = [
         {period.inputHref && (
           <div
             slot="footer"
-            class="border-t border-line-hair pb-13px pt-10px text-center pc:(pb-14px pt-15px)"
+            class="border-t border-line-hair pb-13px pt-9px text-center pc:(pb-14px pt-14px)"
           >
             <a href={period.inputHref} class="link text-body">
               自己評価を入力する

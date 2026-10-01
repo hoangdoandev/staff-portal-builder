@@ -5,6 +5,8 @@
  * - SP: chỉ マイページ / お知らせ / メニュー, nhãn đậm màu xám. Bỏ phần trắng phía trên khung Figma
  *   (chỗ thanh trạng thái điện thoại), giữ nguyên vị trí các phần tử bên trong.
  * - Icon và nhãn cùng nằm trên một hàng: icon trong hộp cao 22px, nhãn ngay bên dưới.
+ * - PC: đường kẻ dưới vẽ bằng bóng 1px đè lên mép trên breadcrumb (Figma: header cao 62px, kẻ ở mép dưới), nên header
+ *   cao đúng 62px. relative z-40 để bóng nằm trên breadcrumb và menu (z-30 bên trong) nằm trên thanh cố định đáy.
  * - Nút メニュー mở SiteMenu; khi mở, icon ba gạch đổi thành dấu × (theo aria-expanded).
  */
 import SiteMenu from './SiteMenu.astro';
@@ -17,7 +19,7 @@ interface Props {
 const { noticeCount = 3 } = Astro.props;
 ---
 
-<header class="flex justify-between bg-white pl-12px pr-10px shadow-header pc:(border-b border-line-hair pl-18px pr-8px shadow-none)">
+<header class="relative z-40 flex justify-between bg-white pl-12px pr-10px shadow-header pc:(pl-18px pr-8px shadow-header-pc)">
   <a href="/" class="mt-9px self-start focusable pc:mt-13px">
     <img
       src="/assets/img/common/logo-staff-portal.svg"

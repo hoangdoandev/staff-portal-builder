@@ -4,6 +4,9 @@
  * Gồm: số thứ tự + tên tiêu chí + nhãn trạng thái, mô tả, ô chọn mức S〜D (radio), giải thích mức đang chọn,
  * danh sách tiêu chuẩn S〜D mở/đóng bằng <details> (không cần JS), ô コメント có đếm ký tự (script char-counter.js).
  *
+ * Khoảng cách tới link S〜D theo Figma PC: 5px sau khung giải thích, 3px sau ô S〜D khi chưa chọn, 10px khi danh sách mở sẵn
+ * (SP luôn 5px). SP padding dưới 15px để thẻ cao đúng như Figma (Figma làm tròn chiều cao các dòng chữ).
+ *
  * Chọn mức khác trên trình duyệt chỉ đổi ô được tô màu; khung giải thích do server render theo mức đã lưu.
  */
 export type Grade = 'S' | 'A' | 'B' | 'C' | 'D';
@@ -56,7 +59,7 @@ const commentId = `comment-${fieldKey}`;
 const counterId = `comment-${fieldKey}-count`;
 ---
 
-<li class="rounded-base border border-line bg-white p-14px pc:p-19px">
+<li class="rounded-base border border-line bg-white px-14px pb-15px pt-14px pc:p-19px">
   <div class="flex items-center gap-7px">
     <span class="step-number" aria-hidden="true">
       {number}
@@ -91,18 +94,26 @@ const counterId = `comment-${fieldKey}-count`;
     </div>
   )}
 
-  <details class="group mt-5px" open={criteriaOpen}>
+  <details
+    class:list={[
+      'group',
+      selected ? 'mt-5px' : criteriaOpen ? 'mt-5px pc:mt-10px' : 'mt-5px pc:mt-3px',
+    ]}
+    open={criteriaOpen}
+  >
     <summary class="summary-plain link w-fit text-body-sm leading-copy">
       <span class="group-open:hidden">S〜Dの判定基準を見る</span>
       <span class="hidden group-open:inline">基準を閉じる</span>
     </summary>
-    <dl class="mt-5px flex flex-col gap-5px">
+    <dl class="mt-5px flex flex-col gap-5px pc:mt-3px">
       {grades.map((grade) => (
         <div class="flex rounded-base bg-info-tint px-14px py-10px pc:py-9px">
           <dt class="w-21px shrink-0 text-body font-semibold leading-copy text-info-key">
             {grade}
           </dt>
-          <dd class="text-body-sm leading-copy text-info">{criteria[grade]}</dd>
+          <dd class="pb-1px pt-1px text-body-sm leading-copy text-info pc:pb-0">
+            {criteria[grade]}
+          </dd>
         </div>
       ))}
     </dl>
