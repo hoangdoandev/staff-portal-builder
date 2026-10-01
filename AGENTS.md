@@ -7,6 +7,7 @@ File này dành cho dev và AI agent (Claude Code đọc qua `CLAUDE.md`). Chi t
 - `builder` (repo này): source Astro + UnoCSS + TypeScript. Chỉ FE dùng.
 - `html` (`plustechcoltd/sunnylife-spot_html`): output build cho BE. Đặt cạnh nhau: `Staff Portal/builder`, `Staff Portal/html`.
 - `builder/main` luôn ứng với `html/develop`.
+- `html` **không track `AGENTS.md` và `CLAUDE.md`** (BE không cần thấy). Quy tắc cho `html` chỉ nằm ở file này; không `git add -A` kéo chúng vào commit bên `html`.
 
 ## Quy trình mỗi màn / feature
 

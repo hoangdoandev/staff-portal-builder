@@ -1,0 +1,42 @@
+---
+/**
+ * Thẻ một kỳ đánh giá (Figma: viền xám, bo 4px) dùng chung cho 自己評価一覧 và 一次評価一覧.
+ * Hai mục đầu là 対象期間 và 提出期限, ngăn bằng đường kẻ. Kỳ đã kết thúc (`closed`): hạn nộp hiện màu xám.
+ * Slot mặc định: các mục tiếp theo trong <dl> (mỗi mục là một <div> có <dt>/<dd>).
+ * Slot "footer": phần dưới <dl>, ví dụ link nhập.
+ */
+interface Props {
+  name: string;
+  range: string;
+  deadline: string;
+  remaining: string;
+  closed?: boolean | undefined;
+}
+
+const { name, range, deadline, remaining, closed = false } = Astro.props;
+---
+
+<li class="rounded-base border border-line bg-white px-14px pc:px-19px">
+  <dl class="divide-y divide-line-hair">
+    <div class="pb-14px pt-12px pc:pt-16px">
+      <dt class="tag">対象期間</dt>
+      <dd class="mt-6px flex items-center justify-between gap-10px">
+        <span class="shrink-0 text-body font-semibold">{name}</span>
+        <span class="text-right text-caption text-ink-sub">{range}</span>
+      </dd>
+    </div>
+    <div class="pb-14px pt-15px">
+      <dt class="tag">提出期限</dt>
+      <dd class="mt-6px flex items-center justify-between gap-10px">
+        <span
+          class:list={['text-body font-semibold', closed ? 'text-ink-disabled' : 'text-danger']}
+        >
+          {deadline}
+        </span>
+        <span class="text-right text-caption text-ink-sub">{remaining}</span>
+      </dd>
+    </div>
+    <slot />
+  </dl>
+  <slot name="footer" />
+</li>

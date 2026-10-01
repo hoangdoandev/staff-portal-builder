@@ -1,0 +1,139 @@
+---
+/**
+ * 一次評価一覧 (Figma PC 606:4724, SP 606:3893): tab 部下の評価 của 人事評価.
+ * Kỳ đang mở: 対象期間, 提出期限, 一次評価者 (người dùng, kèm danh sách cấp dưới cần đánh giá).
+ * Mỗi cấp dưới có nhãn trạng thái tự đánh giá, tiến độ và link nhập. Kỳ đã kết thúc chỉ có hai mục đầu.
+ * Dữ liệu dưới đây là nội dung mẫu theo thiết kế, BE thay bằng dữ liệu thật.
+ */
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import EvaluationPeriodCard from '../../components/EvaluationPeriodCard.astro';
+import PageTabs from '../../components/PageTabs.astro';
+import PageTitle from '../../components/PageTitle.astro';
+import ProgressBar from '../../components/ProgressBar.astro';
+import PageLayout from '../../layouts/PageLayout.astro';
+
+type SelfEvaluationStatus = 'inputting' | 'empty' | 'done';
+
+interface Subordinate {
+  name: string;
+  /** Mỗi phần tử là một dòng (cơ sở, chức vụ...). */
+  affiliation: string[];
+  selfStatus: { type: SelfEvaluationStatus; label: string };
+  percent: number;
+  inputHref: string;
+}
+
+/** Màu chữ và nền của nhãn trạng thái tự đánh giá. */
+const statusClass: Record<SelfEvaluationStatus, string> = {
+  inputting: 'bg-warning-tint text-warning',
+  empty: 'bg-danger-tint text-danger-sub',
+  done: 'bg-success-tint text-success',
+};
+
+const evaluator = {
+  name: '齋藤 陽子（自分）',
+  affiliation: ['サニーライフおゆみ野', '支配人(課長級)／中間管理職', '介護支援専門職／G4'],
+};
+
+const subordinates: Subordinate[] = [
+  {
+    name: '永田 丸子',
+    affiliation: ['サニーライフおゆみ野', '生活相談員／G4'],
+    selfStatus: { type: 'inputting', label: '自己評価入力中 29%' },
+    percent: 67,
+    inputHref: '#',
+  },
+  {
+    name: '永田 丸子',
+    affiliation: ['サニーライフおゆみ野', '生活相談員／G4'],
+    selfStatus: { type: 'empty', label: '自己評価未入力' },
+    percent: 67,
+    inputHref: '#',
+  },
+  {
+    name: '永田 丸子',
+    affiliation: ['サニーライフおゆみ野', '生活相談員／G4'],
+    selfStatus: { type: 'done', label: '自己評価入力済' },
+    percent: 67,
+    inputHref: '#',
+  },
+];
+---
+
+<PageLayout title="一次評価一覧｜人事評価">
+  <Breadcrumb items={[{ label: 'HOME', href: '/' }, { label: '人事評価' }]} />
+  <PageTitle title="人事評価" backHref="/" />
+  <PageTabs
+    label="人事評価の種類"
+    items={[
+      { label: '自己評価', href: '/evaluation/self.html' },
+      { label: '部下の評価', href: '/evaluation/primary.html', current: true, count: 1 },
+    ]}
+  />
+
+  <p class="min-h-50px bg-danger-tint px-15px py-12px text-body pc:(flex items-center justify-center text-center)">
+    <strong class="font-semibold">2026年10月28日（水）迄</strong>に、部下残り<strong class="font-semibold">10名</strong>の一次評価を完了してください
+  </p>
+
+  <ul class="mx-10px mb-40px mt-20px flex flex-col gap-15px pc:(mx-auto mb-70px mt-50px w-580px)">
+    <EvaluationPeriodCard
+      name="2026年度 上期"
+      range="2026年4月1日〜9月30日"
+      deadline="2026年10月28日（水）"
+      remaining="あと30日"
+    >
+      <div class="pb-8px pt-15px pc:pb-0">
+        <dt class="tag">一次評価者</dt>
+        <dd class="mt-6px">
+          <p class="text-body font-semibold">{evaluator.name}</p>
+          <p class="mt-3px text-caption leading-copy text-ink-sub">
+            {evaluator.affiliation.map((line) => <span class="block">{line}</span>)}
+          </p>
+          <div class="mb-20px mt-8px flex gap-7px rounded-base bg-info-tint pb-9px pl-10px pr-12px pt-14px pc:(mb-15px mt-12px gap-9px pb-12px pl-12px pr-20px pt-12px)">
+            <img
+              src="/assets/img/icon/icon-help.svg"
+              alt=""
+              width="18"
+              height="18"
+              class="-mt-3px size-18px shrink-0 pc:(mt-1px size-20px)"
+            />
+            <p class="text-body-sm leading-copy text-info [word-break:auto-phrase]">
+              評価ルートで、あなたが一次評価者になっている 職員は以下10名です。 「一次評価を入力する」をタップすると、その方の評価シートが開きます。
+            </p>
+          </div>
+          <ul>
+            {subordinates.map((person) => (
+              <li class="border-t border-line-hair pb-14px pt-13px pc:pb-16px">
+                <div class="flex items-start justify-between gap-10px">
+                  <p class="text-body font-semibold">{person.name}</p>
+                  <span class:list={['chip relative -top-5px pc:top-6px', statusClass[person.selfStatus.type]]}>
+                    {person.selfStatus.label}
+                  </span>
+                </div>
+                <p class="mt-3px text-caption leading-copy text-ink-sub">
+                  {person.affiliation.map((line) => <span class="block">{line}</span>)}
+                </p>
+                <p class="mt-15px text-caption leading-copy pc:mt-17px">一次評価の進捗</p>
+                <div class="-mt-5px pc:-mt-2px">
+                  <ProgressBar label="一次評価の進捗" percent={person.percent} />
+                </div>
+                <p class="mt-12px text-center pc:mt-8px">
+                  <a href={person.inputHref} class="link text-body">
+                    一次評価をを入力する
+                  </a>
+                </p>
+              </li>
+            ))}
+          </ul>
+        </dd>
+      </div>
+    </EvaluationPeriodCard>
+    <EvaluationPeriodCard
+      name="2025年度 下期"
+      range="2025年10月1日〜3月31日"
+      deadline="評価期間終了"
+      remaining="あと16日"
+      closed
+    />
+  </ul>
+</PageLayout>
