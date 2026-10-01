@@ -156,6 +156,8 @@ BE copy output một lần, sau đó theo dõi diff của repo output và tự s
 
 - `presetWind4` phải để `preflights.theme: true`. Chế độ mặc định chỉ ghi biến theme đang dùng theo thứ tự phát hiện class,
   mà Astro build các trang song song, nên thứ tự biến trong `:root` đổi giữa các lần build.
+- File trong `uno/` (shortcut, token, font, biến thể) khai báo ở `configDeps` của `uno.config.ts`, nên `pnpm dev` tự nạp lại
+  khi sửa. Thêm file mới vào `uno/` thì thêm cả vào `configDeps`. Nếu CSS lúc dev khác bản build, khởi động lại `pnpm dev`.
 - Không đặt tên shortcut bắt đầu bằng tên biến thể (`focus-`, `hover-`...): UnoCSS hiểu `focus-ring` thành `focus:` + `ring`.
 
 ## Checklist nghiệm thu skeleton

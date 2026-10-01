@@ -1,3 +1,4 @@
+import { fileURLToPath } from 'node:url';
 import { defineConfig, presetWind4, transformerDirectives, transformerVariantGroup } from 'unocss';
 import { fontsPreset } from './uno/fonts';
 import { shortcuts } from './uno/shortcuts';
@@ -14,6 +15,11 @@ export default defineConfig({
   transformers: [transformerDirectives(), transformerVariantGroup()],
   variants: [hoverOnPointerDevices],
   shortcuts,
+  // Các file trong uno/ mà config import: đổi file nào cũng nạp lại config khi `pnpm dev` đang chạy.
+  // Thiếu dòng này thì sửa shortcut/token xong, dev server vẫn sinh CSS theo bản cũ cho tới khi khởi động lại.
+  configDeps: ['fonts', 'shortcuts', 'tokens', 'variants'].map((name) =>
+    fileURLToPath(new URL(`./uno/${name}.ts`, import.meta.url)),
+  ),
   content: {
     // Script TS được tsc biên dịch riêng, không đi qua Vite, nên phải đọc trực tiếp từ đĩa (filesystem)
     // để class dùng trong script (classList.add...) vẫn sinh CSS. File đọc từ đĩa vẫn phải khớp
