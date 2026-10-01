@@ -61,7 +61,10 @@ if ! diff -r "$snapshot" dist; then
 fi
 
 echo "==> Đồng bộ dist/ -> $TARGET (giữ nguyên .git)"
-rsync -a --delete --exclude '.git' --exclude '.DS_Store' dist/ "$TARGET/"
+# File do repo html tự quản lý (quy tắc, .gitignore): không ghi đè, không xoá.
+rsync -a --delete \
+  --exclude '.git' --exclude '.gitignore' --exclude 'AGENTS.md' --exclude 'CLAUDE.md' --exclude '.DS_Store' \
+  dist/ "$TARGET/"
 
 echo "==> Thay đổi ở $TARGET (nhánh $branch):"
 git -C "$TARGET" status --short
