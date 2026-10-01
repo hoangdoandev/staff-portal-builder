@@ -1,0 +1,30 @@
+---
+/**
+ * Breadcrumb (Figma "パンクズ", chỉ có ở PC): nền xám cao 30px ngay dưới header.
+ * Mục cuối là trang hiện tại, không có link.
+ */
+interface Props {
+  items: { label: string; href?: string }[];
+}
+
+const { items } = Astro.props;
+---
+
+<nav aria-label="パンくずリスト" class="lt-pc:hidden">
+  <ol class="flex h-30px items-center gap-10px bg-surface-breadcrumb px-20px text-caption-sm">
+    {items.map(({ label, href }, index) => (
+      <li class="flex items-center gap-10px">
+        {index > 0 && (
+          <img src="/assets/img/icon/icon-breadcrumb-arrow.svg" alt="" width="3.7" height="6" />
+        )}
+        {href ? (
+          <a href={href} class="text-ink-sub hov:underline focusable">
+            {label}
+          </a>
+        ) : (
+          <span aria-current="page">{label}</span>
+        )}
+      </li>
+    ))}
+  </ol>
+</nav>

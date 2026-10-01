@@ -30,14 +30,14 @@ Hỗ trợ trình duyệt cũ hơn sẽ làm output khó đọc hơn, chỉ làm
 
 Nguồn: Figma "Kawashima HR - Staff Portal" (khung PC 1366px, SP 390px). Giữ nguyên giá trị theo thiết kế.
 
-| Nội dung                                                                                                                        | Vị trí                  |
-| ------------------------------------------------------------------------------------------------------------------------------- | ----------------------- |
-| **Giá trị** token: màu, cỡ chữ (SP và PC), bo góc, bóng, chiều cao dòng                                                         | `src/styles/tokens.css` |
-| Tên class ứng với từng token, breakpoint                                                                                        | `uno/tokens.ts`         |
-| Font (Hiragino Sans, dự phòng Noto Sans JP)                                                                                     | `uno/fonts.ts`          |
-| Class ngữ nghĩa và trạng thái: `btn`, `btn-primary`, `btn-outline`, `link`, `field`, `focusable`, `header-nav-*`, `footer-link` | `uno/shortcuts.ts`      |
-| Biến thể `hov:` (hover chỉ trên thiết bị có chuột)                                                                              | `uno/variants.ts`       |
-| Ghép các phần trên                                                                                                              | `uno.config.ts`         |
+| Nội dung                                                                                                                                        | Vị trí                  |
+| ----------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------- |
+| **Giá trị** token: màu, cỡ chữ (SP và PC), bo góc, bóng, chiều cao dòng                                                                         | `src/styles/tokens.css` |
+| Tên class ứng với từng token, breakpoint                                                                                                        | `uno/tokens.ts`         |
+| Font (Hiragino Sans, dự phòng Noto Sans JP)                                                                                                     | `uno/fonts.ts`          |
+| Class ngữ nghĩa và trạng thái: `btn`, `btn-primary`, `btn-outline`, `link`, `field`, `focusable`, `header-nav-*`, `footer-link`, `tag`, `badge` | `uno/shortcuts.ts`      |
+| Biến thể `hov:` (hover chỉ trên thiết bị có chuột)                                                                                              | `uno/variants.ts`       |
+| Ghép các phần trên                                                                                                                              | `uno.config.ts`         |
 
 - **Đổi giá trị** (màu, cỡ chữ...): chỉ sửa `src/styles/tokens.css`. **Thêm token mới**: thêm biến vào `tokens.css`, rồi thêm
   tên vào danh sách tương ứng trong `uno/tokens.ts`. Tên biến không được trùng biến Wind4 tự sinh (`--colors-*`, `--radius-*`,
@@ -67,6 +67,8 @@ Nguồn: Figma "Kawashima HR - Staff Portal" (khung PC 1366px, SP 390px). Giữ 
   ít nội dung thì footer vẫn nằm sát đáy màn hình. Trang thường dùng layout này; trang không có header/footer dùng `BaseLayout`.
 - `src/components/SiteHeader.astro`, `SiteFooter.astro`: header, footer chung (Figma PC 606:4688 / 606:4696, SP 606:3892 / 606:3878).
   SP chỉ hiện マイページ / お知らせ / メニュー. Nút メニュー chưa có hành vi vì Figma chưa có thiết kế menu.
+- Component dùng chung dưới header: `Breadcrumb.astro` (chỉ PC), `PageTitle.astro` (tiêu đề + nút quay lại),
+  `PageTabs.astro` (tab chuyển trang, tab hiện tại có `aria-current="page"`).
 
 ## Ảnh và icon
 

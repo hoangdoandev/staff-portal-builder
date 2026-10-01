@@ -64,7 +64,7 @@ export const colors = {
 
 export const radius = cssVars('rounded', ['tag', 'base', 'bar', 'pill']);
 
-export const shadow = cssVars('box-shadow', ['header', 'title', 'bar']);
+export const shadow = cssVars('box-shadow', ['header', 'title', 'bar', 'back']);
 
 export const leading = cssVars('line-height', ['copy', 'tight']);
 
@@ -83,5 +83,7 @@ export const text = Object.fromEntries(
     'footer-link',
     'nav',
     'micro',
+    'figure',
+    'figure-unit',
   ].map((name) => [name, { fontSize: `var(--font-size-${name})`, lineHeight: 'normal' }]),
 );
