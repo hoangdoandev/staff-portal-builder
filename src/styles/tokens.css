@@ -65,6 +65,7 @@
   --box-shadow-title: 0 2px 2px rgba(0, 0, 0, 0.05); /* thanh tiêu đề trang */
   --box-shadow-bar: 0 -3px 3px rgba(0, 0, 0, 0.05); /* thanh hành động dính đáy */
   --box-shadow-back: 0 0 4px rgba(0, 0, 0, 0.08); /* nút quay lại tròn trên thanh tiêu đề */
+  --box-shadow-menu: -4px 0 12px rgba(0, 0, 0, 0.08); /* panel menu ở PC, ngoài thiết kế */
 
   /* Chiều cao dòng */
   --line-height-copy: 1.55; /* đoạn nhiều dòng */
@@ -88,6 +89,8 @@
   --font-size-step: 12px; /* số trong vòng tròn đánh số tiêu chí, PC cũng 12px */
   --font-size-rating: 14px; /* chữ S〜D trong ô chọn mức đánh giá, PC cũng 14px */
   --font-size-bar-label: 11px; /* dòng nhỏ trên thanh hành động dính đáy ("自己評価 3/11項目") */
+  --font-size-menu: 14px; /* mục trong menu header, PC cũng 14px */
+  --font-size-menu-sub: 13px; /* link điều khoản cuối menu, PC cũng 13px */
 
   /*
    * Chiều cao dòng đi kèm từng cỡ chữ: SP. Bằng chiều cao khung chữ "Auto" của Figma (Hiragino Sans) = làm tròn lên cỡ × 1.5,
@@ -110,6 +113,8 @@
   --line-height-step: 18px;
   --line-height-rating: 21px;
   --line-height-bar-label: 17px;
+  --line-height-menu: 21px;
+  --line-height-menu-sub: 20px;
 }
 
 /* Cỡ chữ và chiều cao dòng: PC (từ 768px, khớp breakpoint `pc` trong uno/tokens.ts) */

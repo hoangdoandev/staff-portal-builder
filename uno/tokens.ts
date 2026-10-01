@@ -64,7 +64,7 @@ export const colors = {
 
 export const radius = cssVars('rounded', ['tag', 'check', 'base', 'bar', 'pill']);
 
-export const shadow = cssVars('box-shadow', ['header', 'title', 'bar', 'back']);
+export const shadow = cssVars('box-shadow', ['header', 'title', 'bar', 'back', 'menu']);
 
 export const leading = cssVars('line-height', ['copy', 'tight']);
 
@@ -91,6 +91,8 @@ export const text = Object.fromEntries(
     'step',
     'rating',
     'bar-label',
+    'menu',
+    'menu-sub',
   ].map((name) => [
     name,
     { fontSize: `var(--font-size-${name})`, lineHeight: `var(--line-height-${name})` },

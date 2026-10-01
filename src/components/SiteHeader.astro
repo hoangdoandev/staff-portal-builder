@@ -5,7 +5,10 @@
  * - SP: chỉ マイページ / お知らせ / メニュー, nhãn đậm màu xám. Bỏ phần trắng phía trên khung Figma
  *   (chỗ thanh trạng thái điện thoại), giữ nguyên vị trí các phần tử bên trong.
  * - Icon và nhãn cùng nằm trên một hàng: icon trong hộp cao 22px, nhãn ngay bên dưới.
+ * - Nút メニュー mở SiteMenu; khi mở, icon ba gạch đổi thành dấu × (theo aria-expanded).
  */
+import SiteMenu from './SiteMenu.astro';
+
 interface Props {
   /** Số thông báo chưa đọc; 0 thì ẩn huy hiệu. */
   noticeCount?: number;
@@ -76,13 +79,34 @@ const { noticeCount = 3 } = Astro.props;
         </a>
       </li>
       <li>
-        <button type="button" class="header-nav-item" aria-expanded="false">
+        <button
+          type="button"
+          class="group/toggle header-nav-item"
+          aria-expanded="false"
+          aria-controls="site-menu"
+          data-site-menu-toggle
+        >
           <span class="header-nav-icon">
-            <img src="/assets/img/icon/icon-menu.svg" alt="" width="20" height="14" />
+            <img
+              src="/assets/img/icon/icon-menu.svg"
+              alt=""
+              width="20"
+              height="14"
+              class="group-aria-expanded/toggle:hidden"
+            />
+            <img
+              src="/assets/img/icon/icon-close.svg"
+              alt=""
+              width="16"
+              height="16"
+              class="hidden group-aria-expanded/toggle:block"
+            />
           </span>
           メニュー
         </button>
       </li>
     </ul>
   </nav>
+  <SiteMenu id="site-menu" />
 </header>
+<script is:inline defer src="/assets/js/site-menu.js"></script>
