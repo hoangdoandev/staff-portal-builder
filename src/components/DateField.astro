@@ -1,0 +1,38 @@
+---
+/**
+ * Ô chọn ngày hiển thị cố định dạng yyyy/mm/dd như thiết kế (Figma 一次評価入力画面: 面談日).
+ * <input type="date"> tự hiển thị theo ngôn ngữ trình duyệt (Chrome tiếng Anh ra 07/01/2026), nên phần nhìn thấy là
+ * một nút; bấm nút mở bảng chọn ngày của trình duyệt (showPicker, script date-field.js).
+ * Giá trị gửi form nằm ở <input type="date" name> ẩn, dạng ISO "2026-07-01".
+ */
+interface Props {
+  name: string;
+  /** Ngày dạng "yyyy-mm-dd". */
+  value: string;
+  label: string;
+  class?: string | undefined;
+}
+
+const { name, value, label, class: className } = Astro.props;
+---
+
+<div class:list={['relative', className]} data-date-field>
+  <input
+    type="date"
+    name={name}
+    value={value}
+    tabindex="-1"
+    aria-hidden="true"
+    class="pointer-events-none absolute bottom-0 left-0 h-0 w-full opacity-0"
+  />
+  <button type="button" class="field-date" aria-label={label}>
+    <span data-date-field-text>{value.replaceAll('-', '/')}</span>
+    <img
+      src="/assets/img/icon/icon-calendar.svg"
+      alt=""
+      width="14"
+      height="15"
+      class="mr-2px h-14px w-13px pc:(mr-1px h-15px w-14px)"
+    />
+  </button>
+</div>
