@@ -18,3 +18,13 @@ desktop.ini
 *.log
 .env
 .env.*
+# Pixel diff & mock artifacts
+perfect-pixel/
+actual.png
+diff*.png
+test_*.png
+shot_*.png
+figma_*.png
+public/*-mock.png
+public/figma-mock.png
+scripts/pixel-diff.py

@@ -14,7 +14,8 @@ interface Props {
 const { noticeCount = 3 } = Astro.props;
 ---
 
-<header class="flex justify-between bg-white pl-12px pr-10px shadow-header pc:(border-b border-line-hair pl-18px pr-8px shadow-none)">
+<!-- Figma PC 606:4688: Header cao đúng 62px (border-box, breadcrumb bắt đầu tại y: 62) -->
+<header class="flex justify-between bg-white pl-12px pr-10px shadow-header pc:(h-62px border-b border-line-hair pl-18px pr-8px shadow-none)">
   <a href="/" class="mt-9px self-start focusable pc:mt-13px">
     <img
       src="/assets/img/common/logo-staff-portal.svg"

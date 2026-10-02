@@ -39,7 +39,7 @@ const subordinates: Subordinate[] = [
   {
     name: '永田 丸子',
     affiliation: ['サニーライフおゆみ野', '生活相談員／G4'],
-    selfStatus: { type: 'inputting', label: '自己評価入力中 29%' },
+    selfStatus: { type: 'inputting', label: '自己評価入力中 28%' },
     percent: 67,
     inputHref: '/evaluation/primary-input.html',
   },
@@ -71,7 +71,8 @@ const subordinates: Subordinate[] = [
     ]}
   />
 
-  <p class="min-h-50px bg-danger-tint px-15px py-12px text-body pc:(flex items-center justify-center text-center)">
+  <!-- Figma 606:4795: Không có khoảng trắng giữa （水） và 迄 để text căn giữa chuẩn pixel -->
+  <p class="min-h-50px bg-danger-tint px-15px pb-10px pt-12px text-body pc:(flex h-50px items-center justify-center py-0 text-center)">
     <strong class="font-semibold">2026年10月28日（水）迄</strong>に、部下残り<strong class="font-semibold">10名</strong>の一次評価を完了してください
   </p>
 
@@ -86,10 +87,11 @@ const subordinates: Subordinate[] = [
         <dt class="tag">一次評価者</dt>
         <dd class="mt-6px">
           <p class="text-body font-semibold">{evaluator.name}</p>
-          <p class="mt-3px text-caption leading-copy text-ink-sub">
+          <p class="mt-3px text-caption leading-copy text-ink-sub pc:mt-5px">
             {evaluator.affiliation.map((line) => <span class="block">{line}</span>)}
           </p>
-          <div class="mb-20px mt-8px flex gap-7px rounded-base bg-info-tint pb-9px pl-10px pr-12px pt-14px pc:(mb-15px mt-12px gap-9px pb-12px pl-12px pr-20px pt-12px)">
+          <!-- Figma 606:4759: pc:mb-11px để đường kẻ bắt đầu danh sách cấp dưới nằm chính xác tại y: 690px -->
+          <div class="mb-15px mt-10px flex gap-7px rounded-base bg-info-tint pb-12px pl-10px pr-12px pt-11px pc:(mb-11px mt-10px gap-9px pb-12px pl-12px pr-20px pt-12px)">
             <img
               src="/assets/img/icon/icon-help.svg"
               alt=""
@@ -101,23 +103,33 @@ const subordinates: Subordinate[] = [
               評価ルートで、あなたが一次評価者になっている 職員は以下10名です。 「一次評価を入力する」をタップすると、その方の評価シートが開きます。
             </p>
           </div>
+          <!-- Figma: Chiều cao mỗi thẻ cấp dưới là 182px, mục cuối 184px (pb-19px / pb-21px) để tổng card 1 chuẩn 935px -->
           <ul>
             {subordinates.map((person) => (
-              <li class="border-t border-line-hair pb-14px pt-13px pc:pb-16px">
+              <li class="border-t border-line-hair pb-14px pt-13px pc:(pb-19px pt-15px) last:pc:pb-21px">
                 <div class="flex items-start justify-between gap-10px">
                   <p class="text-body font-semibold">{person.name}</p>
-                  <span class:list={['chip relative -top-5px pc:top-6px', statusClass[person.selfStatus.type]]}>
+                  <!-- Figma 606:4724: Chip 1 đặt thấp hơn tên 6px (top-6px, y: 712), Chip 2 & 3 ngang hàng tên (top-0). mr-2px để cách viền 22px -->
+                  <span
+                    class:list={[
+                      'chip relative top-1px pc:mr-2px',
+                      person.selfStatus.type === 'inputting' ? 'pc:top-6px' : 'pc:top-0',
+                      statusClass[person.selfStatus.type],
+                    ]}
+                  >
                     {person.selfStatus.label}
                   </span>
                 </div>
-                <p class="mt-3px text-caption leading-copy text-ink-sub">
+                <p class="mt-3px text-caption leading-copy text-ink-sub pc:mt-5px">
                   {person.affiliation.map((line) => <span class="block">{line}</span>)}
                 </p>
-                <p class="mt-15px text-caption leading-copy pc:mt-17px">一次評価の進捗</p>
-                <div class="-mt-5px pc:-mt-2px">
+                <p class="mt-15px text-caption leading-copy pc:mt-15px">一次評価の進捗</p>
+                <!-- mr-2px kết hợp padding card 20px tạo khoảng cách 22px đến viền phải -->
+                <div class="-mt-5px pc:(-mt-2px mr-2px)">
                   <ProgressBar label="一次評価の進捗" percent={person.percent} />
                 </div>
-                <p class="mt-12px text-center pc:mt-8px">
+                <!-- Figma 606:4774: mt-2px ở PC để link nằm chuẩn y: 834px (các mục sau lần lượt 1016px, 1198px) -->
+                <p class="mt-12px text-center pc:mt-2px">
                   <a href={person.inputHref} class="link text-body">
                     一次評価をを入力する
                   </a>

@@ -16,6 +16,7 @@
     "format:dist": "prettier --ignore-path .prettierignore --write \"dist/**/*.{html,css,js}\"",
     "check": "astro check",
     "preview": "astro preview",
+    "diff:pixel": "python scripts/pixel-diff.py",
     "release": "bash scripts/release.sh"
   },
   "dependencies": {

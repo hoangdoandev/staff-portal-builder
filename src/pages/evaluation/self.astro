@@ -62,11 +62,13 @@ const periods: EvaluationPeriod[] = [
         closed={period.closed}
       >
         {period.progress && (
-          <div class="pb-15px pt-15px">
+          <div class="pb-14px pt-13px pc:(pb-15px pt-15px)">
             <dt class="tag">自己評価の進捗</dt>
             <dd class="mt-7px pc:mt-5px">
-              <ProgressBar label="自己評価の進捗" percent={period.progress.percent} />
-              <p class="text-right text-caption text-ink-sub pc:mt-4px">
+              <div class="pc:mr-2px">
+                <ProgressBar label="自己評価の進捗" percent={period.progress.percent} />
+              </div>
+              <p class="text-right text-caption text-ink-sub pc:(mr-2px mt-4px)">
                 {period.progress.summary}
               </p>
             </dd>
@@ -75,7 +77,7 @@ const periods: EvaluationPeriod[] = [
         {period.inputHref && (
           <div
             slot="footer"
-            class="border-t border-line-hair pb-13px pt-10px text-center pc:py-13px"
+            class="border-t border-line-hair pb-12px pt-10px text-center pc:py-13px"
           >
             <a href={period.inputHref} class="link text-body">
               自己評価を入力する
