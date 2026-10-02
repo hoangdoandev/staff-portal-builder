@@ -85,20 +85,33 @@ const counterId = `comment-${fieldKey}-count`;
   </fieldset>
 
   {selected && (
-    <div class="mt-10px flex gap-9px rounded-base bg-primary-tint px-15px py-10px pc:pb-14px">
+    <div class="mt-10px flex h-86px gap-9px rounded-base bg-primary-tint px-15px pt-12px pb-8px pc:(h-70px pt-10px pb-14px)">
       <span class="text-rating font-semibold leading-copy">{selected}</span>
       <p class="text-body leading-copy">{criteria[selected]}</p>
     </div>
   )}
 
-  <details class="group mt-5px" open={criteriaOpen}>
+  <details
+    class:list={[
+      'group',
+      selected ? 'mt-5px' : criteriaOpen ? 'mt-5px pc:mt-10px' : 'mt-5px pc:mt-3px',
+    ]}
+    open={criteriaOpen}
+  >
     <summary class="summary-plain link w-fit text-body-sm leading-copy">
       <span class="group-open:hidden">S〜Dの判定基準を見る</span>
       <span class="hidden group-open:inline">基準を閉じる</span>
     </summary>
-    <dl class="mt-5px flex flex-col gap-5px">
+    <dl class="mt-5px flex flex-col gap-5px pc:mt-3px">
       {grades.map((grade) => (
-        <div class="flex rounded-base bg-info-tint px-14px py-10px pc:py-9px">
+        <div
+          class:list={[
+            'flex rounded-base bg-info-tint px-14px py-0 items-start',
+            grade === 'S' || grade === 'D'
+              ? 'h-42px pt-12px pc:(h-42px pt-10px)'
+              : 'h-62px pt-12px pc:(h-62px pt-10px)',
+          ]}
+        >
           <dt class="w-21px shrink-0 text-body font-semibold leading-copy text-info-key">
             {grade}
           </dt>

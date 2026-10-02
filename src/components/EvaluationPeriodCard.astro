@@ -37,7 +37,7 @@ const { name, range, deadline, remaining, closed = false } = Astro.props;
         >
           {deadline}
         </span>
-        {!closed && <span class="text-right text-caption text-ink-sub pc:mr-2px">{remaining}</span>}
+        {remaining && <span class="text-right text-caption text-ink-sub pc:mr-2px">{remaining}</span>}
       </dd>
     </div>
     <slot />

@@ -160,7 +160,7 @@ const commentPlaceholder = '評点の全体像と、次期に期待すること�
       <EvaluationSection
         title={group.title}
         note={group.weight}
-        class={index === 0 ? 'mt-35px pc:mt-50px' : 'mt-30px pc:mt-50px'}
+        class={index === 0 ? 'mt-37px pc:mt-50px' : 'mt-30px pc:mt-50px'}
       >
         {group.notice && (
           <p class="mt-11px rounded-base bg-info-tint px-15px pb-11px pt-9px text-body-sm leading-copy text-info pc:(ml-2px py-12px)">
@@ -186,7 +186,7 @@ const commentPlaceholder = '評点の全体像と、次期に期待すること�
     ))}
 
     <div class="pc:(grid grid-cols-2 gap-x-20px)">
-      <EvaluationSection title="特別加点" note="1〜10点" class="mt-30px pc:mt-50px">
+      <EvaluationSection title="特別加点" note="1〜10点" class="mt-31px pc:mt-50px">
         <div class:list={[card, 'mt-9px flex-1 pc:mt-11px']}>
           <p class="text-body leading-copy">
             通常の評価項目では評価しきれない特別な貢献、新たな取り組み、組織への波及効果の高い成果があった場合に加点します。
@@ -233,7 +233,7 @@ const commentPlaceholder = '評点の全体像と、次期に期待すること�
       <EvaluationSection
         title="フィードバック面談の記録"
         note="記入区分によらず共通"
-        class="mt-30px pc:mt-50px"
+        class="mt-31px pc:mt-50px"
       >
         <div class:list={[card, 'mt-9px flex-1 pc:mt-11px']}>
           <p class="text-body leading-copy">
@@ -263,7 +263,7 @@ const commentPlaceholder = '評点の全体像と、次期に期待すること�
       </EvaluationSection>
     </div>
 
-    <EvaluationSection title="個人目標" note="評価点に反映しない" class="mt-30px pc:mt-50px">
+    <EvaluationSection title="個人目標" note="評価点に反映しない" class="mt-32px pc:mt-50px">
       <div class:list={[card, 'mt-9px grid gap-20px pc:(mt-11px grid-cols-2)']}>
         {personalGoals.map((goal) => (
           <div>

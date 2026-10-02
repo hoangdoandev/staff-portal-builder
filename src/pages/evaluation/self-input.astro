@@ -104,9 +104,9 @@ const formId = 'self-evaluation-form';
     method="post"
     class="mx-10px mb-30px mt-30px pc:(mx-auto mb-70px mt-24px w-1000px)"
   >
-    <div class="pc:(flex items-center gap-9px px-2px)">
-      <p class="tag">対象期間</p>
-      <div class="mt-6px flex items-end justify-between gap-10px pc:(mt-0 justify-start gap-20px)">
+    <div class="pc:(flex items-start gap-9px px-2px)">
+      <p class="tag pc:mt-6px">対象期間</p>
+      <div class="mt-6px flex items-end justify-between gap-10px pc:(mt-0 items-baseline justify-start gap-20px)">
         <p class="text-title-period font-semibold">2026年度 上期</p>
         <p class="text-caption text-ink-sub">2026年4月1日〜9月30日</p>
       </div>
@@ -118,7 +118,7 @@ const formId = 'self-evaluation-form';
           <h2 class="text-title-section font-semibold">{group.title}</h2>
           <p class="pill">{group.weight}</p>
         </div>
-        <ul class="mt-8px grid gap-16px pc:(mt-11px grid-cols-2 gap-20px)">
+        <ul class="mt-7px grid gap-16px pc:(mt-11px grid-cols-2 gap-20px)">
           {group.items.map((item) => (
             <EvaluationCriterionCard {...item} />
           ))}
