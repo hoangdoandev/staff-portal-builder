@@ -15,7 +15,7 @@ export const shortcuts = {
   // Hộp icon cao 22px, căn giữa icon có kích thước khác nhau; làm mốc cho huy hiệu thông báo.
   'header-nav-icon': 'relative flex h-22px w-full items-center justify-center',
   // Link ở footer (cỡ chữ đặt trên ul để chiều cao dòng khớp thiết kế).
-  'footer-link': `text-ink transition-colors duration-150 hov:underline ${focusRing}`,
+  'footer-link': `text-ink transition-colors duration-150 hov:(underline text-12px) ${focusRing}`,
   // Nhãn nền xám nhỏ (ví dụ "対象期間"): cao 18px ở SP, 22px ở PC.
   tag: 'flex h-18px w-fit items-center rounded-tag bg-surface-tag px-7px text-caption-sm text-ink pc:h-22px',
   // Huy hiệu số tròn đỏ: 16px ở SP, 18px ở PC.

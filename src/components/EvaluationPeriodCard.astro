@@ -16,20 +16,23 @@ interface Props {
 const { name, range, deadline, remaining, closed = false } = Astro.props;
 ---
 
-<li class="rounded-base border border-line bg-white px-14px pc:px-19px">
+<li class="rounded-base border border-line bg-white px-14px pc:(pl-20px pr-22px)">
   <dl class="divide-y divide-line-hair">
     <div class="pb-14px pt-12px pc:pt-16px">
       <dt class="tag">対象期間</dt>
-      <dd class="mt-6px flex items-center justify-between gap-10px">
+      <dd class="mt-6px flex items-baseline justify-between gap-10px">
         <span class="shrink-0 text-body font-semibold">{name}</span>
         <span class="text-right text-caption text-ink-sub">{range}</span>
       </dd>
     </div>
     <div class="pb-14px pt-15px">
       <dt class="tag">提出期限</dt>
-      <dd class="mt-6px flex items-center justify-between gap-10px">
+      <dd class="mt-6px flex items-baseline justify-between gap-10px">
         <span
-          class:list={['text-body font-semibold', closed ? 'text-ink-disabled' : 'text-danger']}
+          class:list={[
+            'text-body font-semibold',
+            closed ? 'text-ink-disabled' : 'text-danger pc:[letter-spacing:1.15px]',
+          ]}
         >
           {deadline}
         </span>

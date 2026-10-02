@@ -21,7 +21,9 @@ export const fontsPreset = () =>
     fonts: {
       sans: [
         { name: 'Hiragino Sans', provider: 'none' },
-        { name: 'Noto Sans JP', weights: ['400', '500', '600', '700'] },
+        { name: 'Hiragino Sans GB', provider: 'none' },
+        { name: 'Hiragino Sans GB W3', provider: 'none' },
+        { name: 'Noto Sans JP', weights: ['300', '400', '500', '600', '700'] },
         { name: 'sans-serif', provider: 'none' },
       ],
     },
